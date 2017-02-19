@@ -34,7 +34,7 @@ struct Third {
 };
 
 void mmm(int id, const std::string &s) {
-    std::cout << "mmm function " << id << ' ' << s << '\n';
+    std::cout << "mlmlml function " << id << ' ' << s << '\n';
 }
 
 void ugu(int id, Third &t) {
