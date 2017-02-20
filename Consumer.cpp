@@ -8,8 +8,9 @@ Consumer::Consumer(boost::lockfree::queue<std::string *> &q, std::atomic_int *fi
         : q(q), fileQueueSize(fileQueueSize), qSize(qSize) {}
 
 void Consumer::consume(int id) {
+    /*
     qSize--;
     string *file;
     q.pop(file);
-    cout << file << endl; //sostituire con calcolo bigrammi
+    cout << file << endl; */
 }

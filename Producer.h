@@ -10,23 +10,24 @@
 #include "boost/lockfree/queue.hpp"
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
-
+#include "ctpl.h"
 
 
 class Producer {
+
 private:
     std::string path;
     boost::lockfree::queue<std::string *>& q;
     boost::lockfree::queue<std::string *>& fileQueue;
     std::atomic_int *fileQueueSize;
     std::atomic_int *qSize;
-    static boost::mutex mtx;
+    static ctpl::thread_pool thread_pool;
+
 
 public:
+
     Producer(const std::string &path, boost::lockfree::queue<std::string *> &q,
              boost::lockfree::queue<std::string *> &fileQueue, std::atomic_int *fileQueueSize, std::atomic_int *qSize);
-
-public:
     void produce(int id);
     void test_method();
 
