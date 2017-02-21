@@ -4,13 +4,15 @@
 
 #include "Consumer.h"
 using namespace std;
-Consumer::Consumer(boost::lockfree::queue<std::string *> &q, std::atomic_int *fileQueueSize, std::atomic_int *qSize)
-        : q(q), fileQueueSize(fileQueueSize), qSize(qSize) {}
 
-void Consumer::consume(int id) {
-    /*
+ctpl::thread_pool Consumer::thread_pool(8);
+
+void Consumer::consume() {
+/*
     qSize--;
     string *file;
     q.pop(file);
     cout << file << endl; */
 }
+
+Consumer::Consumer(moodycamel::BlockingConcurrentQueue<string> &q) : q(q) {}

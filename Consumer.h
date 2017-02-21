@@ -7,18 +7,22 @@
 
 
 #include <string>
-#include <boost/lockfree/queue.hpp>
 #include <boost/thread/mutex.hpp>
+#include "concurrentqueue.h"
+#include "ctpl.h"
+#include "blockingconcurrentqueue.h"
 
+namespace cq = moodycamel;
 class Consumer {
 
 private:
-    boost::lockfree::queue<std::string *>& q;
-    std::atomic_int *fileQueueSize;
-    std::atomic_int *qSize;
+    cq::BlockingConcurrentQueue<std::string> &q;
+    static ctpl::thread_pool thread_pool;
+
 public:
-    Consumer(boost::lockfree::queue<std::string *> &q, std::atomic_int *fileQueueSize, std::atomic_int *qSize);
-    void consume(int id);
+    Consumer(moodycamel::BlockingConcurrentQueue<std::string> &q);
+
+    void consume();
 };
 
 

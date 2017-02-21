@@ -3,6 +3,8 @@
 //
 
 #include <iostream>
+#include <boost/iostreams/device/mapped_file.hpp>
+#include <boost/filesystem/path.hpp>
 #include "Producer.h"
 
 using namespace std;
@@ -10,33 +12,40 @@ using namespace std;
 ctpl::thread_pool Producer::thread_pool(8);
 
 void Producer::test_method() {
-    /*
-    threadPool.enqueue([]{
-        cout<<"prova"<<endl;
-    });
-     */
     thread_pool.push([](int id) {
         cout << "ciao da " << id << endl;
     });
 }
 
-void Producer::produce(int id) {
-    /*
-    while (!fileQueue.empty()) {
-        string *file;
-        mtx.lock();
-        if(*qSize<=9) {
-            fileQueue.pop(file);
-            fileQueueSize--;
-            q.push(file);
-            qSize++;
-        }
-        mtx.unlock();
+void Producer::produce() {
+    while (fileQueue.size_approx() > 0) {
+        boost::filesystem::path tmpPath;
+        fileQueue.try_dequeue(tmpPath);
+        thread_pool.push(elaborateText, tmpPath);
     }
-     */
 }
 
-Producer::Producer(const string &path, boost::lockfree::queue<string *> &q, boost::lockfree::queue<string *> &fileQueue,
-                   atomic_int *fileQueueSize, atomic_int *qSize) : path(path), q(q), fileQueue(fileQueue),
-                                                                   fileQueueSize(fileQueueSize), qSize(qSize) {
+void Producer::elaborateText(int id, boost::filesystem::path path) {
+    std::vector<std::string> producerUnit;
+    boost::iostreams::mapped_file file(path);
+    string readFile = file.data();
+    std::string word;
+    for (int i = 0; i < readFile.size(); i++) {
+        while (' ' != readFile[i]) {
+            word += readFile[i];
+            i++;
+        }
+        producerUnit.push_back(word);
+        word = "";
+    }
+    q.enqueue(producerUnit);
 }
+
+Producer::~Producer() {
+    thread_pool.~thread_pool();
+}
+
+
+
+
+
