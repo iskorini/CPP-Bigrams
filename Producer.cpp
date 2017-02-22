@@ -11,6 +11,9 @@ using namespace std;
 
 ctpl::thread_pool Producer::thread_pool(8);
 
+moodycamel::BlockingConcurrentQueue<vector<string>> x(999);
+moodycamel::BlockingConcurrentQueue<std::vector<std::string>> & Producer::q = x;
+
 void Producer::test_method() {
     thread_pool.push([](int id) {
         cout << "ciao da " << id << endl;
@@ -21,11 +24,12 @@ void Producer::produce() {
     while (fileQueue.size_approx() > 0) {
         boost::filesystem::path tmpPath;
         fileQueue.try_dequeue(tmpPath);
-        thread_pool.push(elaborateText, tmpPath);
+        thread_pool.push(Producer::elaborateText, tmpPath);
     }
 }
 
-void Producer::elaborateText(int id, boost::filesystem::path path) {
+
+void Producer::elaborateText(int id, const boost::filesystem::path & path) {
     std::vector<std::string> producerUnit;
     boost::iostreams::mapped_file file(path);
     string readFile = file.data();
@@ -39,6 +43,7 @@ void Producer::elaborateText(int id, boost::filesystem::path path) {
         word = "";
     }
     q.enqueue(producerUnit);
+    cout << "ciaone"<< endl;
 }
 
 Producer::~Producer() {

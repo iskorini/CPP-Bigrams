@@ -19,10 +19,12 @@ namespace cq = moodycamel;
 void printcc(boost::filesystem::path *merda) {
     cout << *merda << endl;
 }
+
 int main(int argc, char **argv) {
-    cq::BlockingConcurrentQueue <std::vector<std::string>> q(999);
+    moodycamel::BlockingConcurrentQueue<vector<string>> q(999);
+    moodycamel::BlockingConcurrentQueue<vector<string>> &x = q;
     cq::ConcurrentQueue <fs::path> fileQueue(999);
-    fs::path targetDir("C:\\Users\\iskor\\CLionProjects\\CPP-Bigrams\\File");
+    fs::path targetDir("C:\\Users\\Tommaso\\CLionProjects\\CPP-Bigrams\\File");
     fs::directory_iterator it(targetDir), eod;
     BOOST_FOREACH(fs::path const &p, std::make_pair(it, eod)) {
                     if (fs::is_regular_file(p)) {
@@ -31,16 +33,21 @@ int main(int argc, char **argv) {
                     }
                 }
 
+    /*
     while (fileQueue.size_approx() > 0) {
         cout << fileQueue.size_approx() << endl;
         fs::path path;
         fileQueue.try_dequeue(path);
         boost::iostreams::mapped_file file(path);
-        cout << file.data() << endl;
+        //cout << file.data() << endl;
         cout << path << endl;
-    }
 
-    Producer producer(q, fileQueue);
+    }
+    */
+
+    //Producer producer(q, fileQueue);
+    Producer producer(fileQueue);
+    producer.produce();
     /*
     Producer producer2(q, fileQueue);
     Producer producer3(q, fileQueue);

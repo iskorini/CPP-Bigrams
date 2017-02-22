@@ -15,18 +15,22 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/path.hpp>
 
+using namespace std;
 namespace cq = moodycamel;
 
 class Producer {
 private:
-    cq::BlockingConcurrentQueue<std::vector<std::string>> &q;
+    static cq::BlockingConcurrentQueue<std::vector<std::string>> &q;
     cq::ConcurrentQueue<boost::filesystem::path> &fileQueue;
     static ctpl::thread_pool thread_pool;
 
-    void elaborateText(int id, boost::filesystem::path);
+    static void elaborateText(int id, const boost::filesystem::path & path);
+
 public:
-    Producer(moodycamel::BlockingConcurrentQueue<std::vector<std::string>> &q,
-             moodycamel::ConcurrentQueue<boost::filesystem::path> &fileQueue) : q(q), fileQueue(fileQueue) {}
+    /*Producer(moodycamel::BlockingConcurrentQueue<std::vector<std::string>> &q,
+             moodycamel::ConcurrentQueue<boost::filesystem::path> &fileQueue) : q(q), fileQueue(fileQueue) {}*/
+
+    Producer(moodycamel::ConcurrentQueue<boost::filesystem::path> &fileQueue) : fileQueue(fileQueue) {}
 
     virtual ~Producer();
 
