@@ -43,7 +43,7 @@ void Producer::elaborateText(int id, const boost::filesystem::path & path) {
         word = "";
     }
     q.enqueue(producerUnit);
-    cout << "ciaone"<< endl;
+    cout << "ciaonee"<< endl;
 }
 
 Producer::~Producer() {
