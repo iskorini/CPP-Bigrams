@@ -8,20 +8,20 @@
 
 #include <string>
 #include <boost/thread/mutex.hpp>
-#include "concurrentqueue.h"
 #include "ctpl.h"
 #include "blockingconcurrentqueue.h"
 
-namespace cq = moodycamel;
+
 class Consumer {
 
 private:
-    cq::BlockingConcurrentQueue<std::string> &q;
+    moodycamel::BlockingConcurrentQueue<std::vector<std::string>> &q;
+
     static ctpl::thread_pool thread_pool;
 
+    void calcBigrams(int id);
 public:
-    Consumer(moodycamel::BlockingConcurrentQueue<std::string> &q);
-
+    Consumer(moodycamel::BlockingConcurrentQueue<std::vector<std::string>> &q) : q(q) {}
     void consume();
 };
 
