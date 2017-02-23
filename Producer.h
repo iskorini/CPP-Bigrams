@@ -31,6 +31,12 @@ public:
     virtual ~Producer();
     void produce();
     void test_method();
+
+    std::thread startProducer() {
+        return std::thread([this] {
+            this->produce();
+        });
+    }
 };
 
 

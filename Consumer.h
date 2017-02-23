@@ -23,6 +23,12 @@ private:
 public:
     Consumer(moodycamel::BlockingConcurrentQueue<std::vector<std::string>> &q) : q(q) {}
     void consume();
+
+    std::thread startConsumer() {
+        return std::thread([this] {
+            this->consume();
+        });
+    }
 };
 
 

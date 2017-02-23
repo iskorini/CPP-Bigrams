@@ -18,9 +18,6 @@ void Consumer::consume() {
 }
 
 void Consumer::calcBigrams(int id) {
-
     std::vector<std::string> text;
     q.try_dequeue(text);
-
-
 }
