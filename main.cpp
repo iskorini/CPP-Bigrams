@@ -11,12 +11,7 @@ using namespace std;
 namespace fs =boost::filesystem;
 namespace cq = moodycamel;
 
-void printcc(boost::filesystem::path *merda) {
-    cout << *merda << endl;
-}
-
 int main(int argc, char **argv) {
-    cout << "inizio" << endl;
     moodycamel::ConcurrentQueue<boost::filesystem::path> fileQueue(999);
     moodycamel::BlockingConcurrentQueue<std::vector<std::string>> q(999);
     fs::path targetDir("C:\\Users\\iskor\\CLionProjects\\CPP-Bigrams\\File\\English");
@@ -27,11 +22,15 @@ int main(int argc, char **argv) {
                         fileQueue.enqueue(p);
                     }
                 }
-    cout << "cazzo culo " << fileQueue.size_approx() << endl;
     Producer producer(q, fileQueue);
+    Consumer consumer(q);
     std::thread threadProducer = producer.startProducer();
+    std::thread threadConsumer = consumer.startConsumer();
     threadProducer.join();
-    //Consumer consumer(q);
-    //consumer.consume();
+    threadConsumer.join();
+    delete producer;
+    delete consumer;
+    cout << fileQueue.size_approx() << endl;
+    cout << q.size_approx() << endl;
     return 0;
 }

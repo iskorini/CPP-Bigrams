@@ -23,15 +23,15 @@ private:
     cq::ConcurrentQueue<boost::filesystem::path> &fileQueue;
     static ctpl::thread_pool thread_pool;
 
-    void elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesystem::path> *&fileQueue);
+    void elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesystem::path> *&fileQueue,
+                       moodycamel::BlockingConcurrentQueue<std::vector<std::string>> *&q);
 
 public:
     Producer(moodycamel::BlockingConcurrentQueue<std::vector<std::string>> &q,
              moodycamel::ConcurrentQueue<boost::filesystem::path> &fileQueue) : q(q), fileQueue(fileQueue) {}
-    virtual ~Producer();
     void produce();
-    void test_method();
 
+    virtual ~Producer();
     std::thread startProducer() {
         return std::thread([this] {
             this->produce();
