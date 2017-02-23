@@ -28,8 +28,8 @@ int main(int argc, char **argv) {
     std::thread threadConsumer = consumer.startConsumer();
     threadProducer.join();
     threadConsumer.join();
-    delete producer;
-    delete consumer;
+    delete &producer;
+    delete &consumer;
     cout << fileQueue.size_approx() << endl;
     cout << q.size_approx() << endl;
     return 0;

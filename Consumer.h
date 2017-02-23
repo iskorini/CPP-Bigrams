@@ -19,11 +19,10 @@ private:
 
     static ctpl::thread_pool thread_pool;
 
-    void calcBigrams(int id);
+    void calcBigrams(int id, moodycamel::BlockingConcurrentQueue<std::vector<std::string>> *&queue);
 public:
     Consumer(moodycamel::BlockingConcurrentQueue<std::vector<std::string>> &q) : q(q) {}
     void consume();
-
     std::thread startConsumer() {
         return std::thread([this] {
             this->consume();
