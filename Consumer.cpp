@@ -9,11 +9,18 @@ using namespace std;
 
 ctpl::thread_pool Consumer::thread_pool(4);
 void Consumer::consume() {
-    while (fileQueue.size_approx() > 0 && q.size_approx() > 0) {
-        cout << "il consumatore: dimensione coda "<< fileQueue.size_approx()<<endl;
+    cout<<"pippo"<<endl;
+    for(int i=0;i < 3;i++){
+    //while (fileQueue.size_approx() > 0 || q.size_approx() > 0) {
+
+        /*int size = fileQueue.size_approx();
+        cout <<"consumatore dimensione filequeue "<<size<<endl;*/
         thread_pool.push([this](int id, moodycamel::BlockingConcurrentQueue<std::vector<std::string>> *&queue, std::unordered_map <std::string, int> &b) {
             this->calcBigrams(id, queue, b);
         }, &q, bigrams);
+        for(auto elem : bigrams){
+            cout <<elem.first<<" "<<elem.second<<endl;
+        }
     }
 }
 
@@ -24,8 +31,12 @@ void Consumer::calcBigrams(int id, moodycamel::BlockingConcurrentQueue<std::vect
     //queue.try_dequeue(text);
     std::string bigram = "";
     std::string inv_bigram = "";
+
+    //printf("%s\n",stringa);
+
     for(int i = 0;i < text.size()-1;i++){
         bigram = text[i]+" "+text[i+1];
+
         inv_bigram = text[i+1]+" "+text[i];
         if(m.find(bigram) != m.end()){
             m[bigram]++;
@@ -36,8 +47,24 @@ void Consumer::calcBigrams(int id, moodycamel::BlockingConcurrentQueue<std::vect
         }
     }
 
+    int z =665;
+    printf("%d\n",z);
+
+
+    int x =666;
+    printf("%d\n",x);
+
     std::string inv_key = "";
     vector<std::string> inv_key_split(2);
+
+    cout <<"risultato locale"<<endl;
+    char* stringa;
+    for(auto elem : m){
+        strcpy(stringa,elem.first.c_str());
+        printf("coppia chiave-valore: %s %d \n",stringa, elem.second);
+        //cout <<elem.first<<" "<<elem.second<<endl;
+    }
+    printf("\n");
 
     mtx.lock();
 
@@ -62,9 +89,11 @@ void Consumer::calcBigrams(int id, moodycamel::BlockingConcurrentQueue<std::vect
     cout <<"risultato attuale"<<endl;
 
     for(auto elem : b){
-        cout <<elem.first<<" "<<elem.second<<endl;
+        strcpy(stringa,elem.first.c_str());
+        printf("coppia chiave-valore: %s %d \n",stringa, elem.second);
+        //cout <<elem.first<<" "<<elem.second<<endl;
     }
-
+    printf("\n");
     mtx.unlock();
 
     //cout << text[1] << endl;

@@ -6,6 +6,7 @@
 #include "Producer.h"
 #include "Consumer.h"
 #include "boost/iostreams/device/mapped_file.hpp"
+#include <errno.h>
 
 using namespace std;
 namespace fs =boost::filesystem;
@@ -33,14 +34,31 @@ int main(int argc, char **argv) {
     std::thread threadConsumer = consumer.startConsumer();
     threadProducer.join();
     threadConsumer.join();
-    delete &producer;
-    delete &consumer;
+
+    //std::vector<std::string> stringa;
+    /*
+    cout<<"dimensione q: "<<q.size_approx()<<endl;
+    for(int i=0;i < 3;i++){
+        q.try_dequeue(stringa);
+        cout<<"stampo stringa "<<i<<endl;
+        for(int j=0;j < stringa.size();j++){
+            cout<<stringa[j]<<endl;
+        }
+        cout<<endl;
+    }
+    */
+    //cout<<"culo1"<<endl;
+    //free(producer);
+    //cout<<"culo2"<<endl;
+    //delete &consumer;
 
     for(auto elem : bigrams){
         cout <<elem.first<<" "<<elem.second<<endl;
     }
 
+    std:cerr<<"Error "<<strerror(errno)<<std::endl;
     cout << fileQueue.size_approx() << endl;
     cout << q.size_approx() << endl;
+
     return 0;
 }

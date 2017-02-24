@@ -13,9 +13,6 @@ ctpl::thread_pool Producer::thread_pool(4);
 
 void Producer::produce() {
     while (fileQueue.size_approx() > 0) {
-        boost::filesystem::path tmpPath;
-        fileQueue.try_dequeue(tmpPath);
-        cout<<"Il path vale"<<tmpPath<<endl;
         thread_pool.push(
                 [this](int id, moodycamel::ConcurrentQueue<boost::filesystem::path> *&fileQueue,
                        moodycamel::BlockingConcurrentQueue<std::vector<std::string>> *&q) {
@@ -30,10 +27,11 @@ void Producer::elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesyst
     boost::filesystem::path path;
 
     fileQueue->try_dequeue(path);
-
+    //printf("porcodio: %d\n",fileQueue->size_approx());
     boost::iostreams::mapped_file file(path);
     string readFile = file.data();
-    cout<<readFile<<endl;
+    //printf("stringa: %s\n",readFile);
+    //cout<<readFile<<endl;
     std::string word;
     // per prendere il testo solo nella lingua desiderata e levare la parte di intestazione di
     // file provenienti da gutenberg project si parte da 1600 e si finisce 20000 caratteri prima
