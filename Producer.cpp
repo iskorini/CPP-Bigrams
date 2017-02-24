@@ -15,6 +15,7 @@ void Producer::produce() {
     while (fileQueue.size_approx() > 0) {
         boost::filesystem::path tmpPath;
         fileQueue.try_dequeue(tmpPath);
+        cout<<"Il path vale"<<tmpPath<<endl;
         thread_pool.push(
                 [this](int id, moodycamel::ConcurrentQueue<boost::filesystem::path> *&fileQueue,
                        moodycamel::BlockingConcurrentQueue<std::vector<std::string>> *&q) {
@@ -27,20 +28,25 @@ void Producer::elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesyst
                              moodycamel::BlockingConcurrentQueue<std::vector<std::string>> *&q) {
     std::vector<std::string> producerUnit;
     boost::filesystem::path path;
+
     fileQueue->try_dequeue(path);
+
     boost::iostreams::mapped_file file(path);
     string readFile = file.data();
+    cout<<readFile<<endl;
     std::string word;
     // per prendere il testo solo nella lingua desiderata e levare la parte di intestazione di
     // file provenienti da gutenberg project si parte da 1600 e si finisce 20000 caratteri prima
-    for (int i = 1600; i < readFile.size() - 20000; i++) {
+    for (int i = 0 /*1600*/; i < readFile.size() /*- 20000*/; i++) {
         while (' ' != readFile[i]) {
             word += readFile[i];
             i++;
         }
         producerUnit.push_back(word);
+        //cout<<"parola estratta: "<<word<<endl;
         word = "";
     }
+
     q->enqueue(producerUnit);
 }
 

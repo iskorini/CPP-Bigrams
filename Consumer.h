@@ -8,6 +8,9 @@
 
 #include <string>
 #include <boost/thread/mutex.hpp>
+#include <unordered_map>
+#include <bits/unordered_map.h>
+#include <boost/filesystem/path.hpp>
 #include "ctpl.h"
 #include "blockingconcurrentqueue.h"
 
@@ -16,12 +19,15 @@ class Consumer {
 
 private:
     moodycamel::BlockingConcurrentQueue<std::vector<std::string>> &q;
-
+    moodycamel::ConcurrentQueue<boost::filesystem::path> &fileQueue;
+    std::unordered_map <std::string, int> &bigrams;
+    std::mutex mtx;
     static ctpl::thread_pool thread_pool;
 
-    void calcBigrams(int id, moodycamel::BlockingConcurrentQueue<std::vector<std::string>> *&queue);
+    void calcBigrams(int id, moodycamel::BlockingConcurrentQueue<std::vector<std::string>> *&queue, std::unordered_map <std::string, int> &bigrams);
 public:
-    Consumer(moodycamel::BlockingConcurrentQueue<std::vector<std::string>> &q) : q(q) {}
+    Consumer(moodycamel::BlockingConcurrentQueue<std::vector<std::string>> &q, moodycamel::ConcurrentQueue<boost::filesystem::path> &fileQueue
+            ,std::unordered_map <std::string, int> &bigrams) : q(q), fileQueue(fileQueue), bigrams(bigrams) {}
     void consume();
     std::thread startConsumer() {
         return std::thread([this] {
