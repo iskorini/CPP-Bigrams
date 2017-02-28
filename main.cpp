@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
 
     std::unordered_map <std::string, int> bigrams;
 
-    fs::path targetDir("C:\\Users\\Tommaso\\CLionProjects\\CPP-Bigrams\\File\\esempi");
+    fs::path targetDir("C:\\Users\\iskor\\CLionProjects\\CPP-Bigrams\\File\\esempi");
     fs::directory_iterator it(targetDir), eod;
 
     BOOST_FOREACH(fs::path const &p, std::make_pair(it, eod)) {
@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
                 }
 
     Producer producer(q, fileQueue);
-    Consumer consumer(q, fileQueue, bigrams);
+    Consumer consumer(q, fileQueue, bigrams, fileQueue.size_approx());
     std::thread threadProducer = producer.startProducer();
     std::thread threadConsumer = consumer.startConsumer();
     threadProducer.join();

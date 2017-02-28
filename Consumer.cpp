@@ -10,11 +10,7 @@ using namespace std;
 ctpl::thread_pool Consumer::thread_pool(4);
 void Consumer::consume() {
     cout<<"pippo"<<endl;
-    for(int i=0;i < 3;i++){
-    //while (fileQueue.size_approx() > 0 || q.size_approx() > 0) {
-
-        /*int size = fileQueue.size_approx();
-        cout <<"consumatore dimensione filequeue "<<size<<endl;*/
+    for (int i = 0; i < expectedFiles; i++) {
         thread_pool.push([this](int id, moodycamel::BlockingConcurrentQueue<std::vector<std::string>> *&queue, std::unordered_map <std::string, int> &b) {
             this->calcBigrams(id, queue, b);
         }, &q, bigrams);
@@ -28,7 +24,6 @@ void Consumer::calcBigrams(int id, moodycamel::BlockingConcurrentQueue<std::vect
     std::vector<std::string> text;
     unordered_map <std::string, int> m;
     queue->try_dequeue(text);
-    //queue.try_dequeue(text);
     std::string bigram = "";
     std::string inv_bigram = "";
 
