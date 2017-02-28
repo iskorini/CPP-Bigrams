@@ -7,7 +7,7 @@
 #include "Consumer.h"
 #include "boost/iostreams/device/mapped_file.hpp"
 #include <errno.h>
-
+#include "ConcurrentUnorderedIntMap.hpp"
 using namespace std;
 namespace fs =boost::filesystem;
 namespace cq = moodycamel;
@@ -28,13 +28,14 @@ int main(int argc, char **argv) {
                     }
                 }
 
+
     Producer producer(q, fileQueue);
     Consumer consumer(q, fileQueue, bigrams, fileQueue.size_approx());
     std::thread threadProducer = producer.startProducer();
     std::thread threadConsumer = consumer.startConsumer();
     threadProducer.join();
     threadConsumer.join();
-
+    /*
     //std::vector<std::string> stringa;
     /*
     cout<<"dimensione q: "<<q.size_approx()<<endl;
