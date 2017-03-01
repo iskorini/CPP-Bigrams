@@ -29,24 +29,25 @@ int main(int argc, char **argv) {
 
 
     Producer producer(q, fileQueue);
-    Consumer consumer(q, fileQueue, bigrams, (int) fileQueue.size_approx());
+    Consumer consumer(q, fileQueue, (int) fileQueue.size_approx());
     std::thread threadProducer = producer.startProducer();
     std::thread threadConsumer = consumer.startConsumer();
     threadProducer.join();
     threadConsumer.join();
-    /*
-    //std::vector<std::string> stringa;
+
+    std::vector<std::string> stringa;
     /*
     cout<<"dimensione q: "<<q.size_approx()<<endl;
     for(int i=0;i < 3;i++){
         q.try_dequeue(stringa);
         cout<<"stampo stringa "<<i<<endl;
         for(int j=0;j < stringa.size();j++){
-            cout<<stringa[j]<<endl;
+            cout<<stringa[j].c_str()<<endl;
         }
         cout<<endl;
     }
-    */
+     */
+
     //cout<<"culo1"<<endl;
     //free(producer);
     //cout<<"culo2"<<endl;
@@ -60,7 +61,7 @@ int main(int argc, char **argv) {
     std:cerr<<"Error "<<strerror(errno)<<std::endl;
     cout << fileQueue.size_approx() << endl;
     cout << q.size_approx() << endl;
-    bigrams.writeHtmlFile("C:\\Users\\iskor\\CLionProjects\\CPP-Bigrams\\File\\esempi.html");
+    bigrams.writeHtmlFile("C:\\Users\\iskor\\CLionProjects\\CPP-Bigrams\\AAAA.html");
 
     return 0;
 }

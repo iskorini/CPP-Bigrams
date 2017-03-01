@@ -19,18 +19,18 @@ class Consumer {
 private:
     moodycamel::BlockingConcurrentQueue<std::vector<std::string>> &q;
     moodycamel::ConcurrentQueue<boost::filesystem::path> &fileQueue;
-    ConcurrentUnorderedIntMap<std::string> &bigrams;
-    std::mutex mtx;
+    ConcurrentUnorderedIntMap<std::string> bigrams;
     int expectedFiles;
     static ctpl::thread_pool thread_pool;
 
-    void calcBigrams(int id, moodycamel::BlockingConcurrentQueue<std::vector<std::string>> *&queue,
-                     ConcurrentUnorderedIntMap<std::string> &bigrams);
+    void calcBigrams(int id);
 public:
-    Consumer(moodycamel::BlockingConcurrentQueue<std::vector<std::string>> &q, moodycamel::ConcurrentQueue<boost::filesystem::path> &fileQueue,
-             ConcurrentUnorderedIntMap<std::string> &bigrams, int expectedFiles) : q(q), fileQueue(fileQueue),
-                                                                                   bigrams(bigrams),
-                                                                                   expectedFiles(expectedFiles) {}
+    Consumer(moodycamel::BlockingConcurrentQueue<std::vector<std::string>> &q,
+             moodycamel::ConcurrentQueue<boost::filesystem::path> &fileQueue, int expectedFiles) : q(q),
+                                                                                                   fileQueue(fileQueue),
+                                                                                                   expectedFiles(
+                                                                                                           expectedFiles) {}
+
     void consume();
     std::thread startConsumer() {
         return std::thread([this] {

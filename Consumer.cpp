@@ -11,26 +11,21 @@ using namespace std;
 ctpl::thread_pool Consumer::thread_pool(4);
 void Consumer::consume() {
     for (int i = 0; i < expectedFiles; i++) {
-        thread_pool.push([this](int id, moodycamel::BlockingConcurrentQueue<std::vector<std::string>> *&queue,
-                                ConcurrentUnorderedIntMap<std::string> &b) {
-            this->calcBigrams(id, queue, b);
-        }, &q, bigrams);
+        thread_pool.push([this](int id) {
+            this->calcBigrams(id);
+        });
     }
 }
 
-void Consumer::calcBigrams(int id, moodycamel::BlockingConcurrentQueue<std::vector<std::string>> *&queue,
-                           ConcurrentUnorderedIntMap<std::string> &b) {
+void Consumer::calcBigrams(int id) {
     std::vector<std::string> text;
     unordered_map <std::string, int> m;
-    queue->try_dequeue(text);
+    q.try_dequeue(text);
+    printf("merda\n");
     std::string bigram = "";
     std::string inv_bigram = "";
-
-    //printf("%s\n",stringa);
-
     for(int i = 0;i < text.size()-1;i++){
         bigram = text[i]+" "+text[i+1];
-
         inv_bigram = text[i+1]+" "+text[i];
         if(m.find(bigram) != m.end()){
             m[bigram]++;
@@ -44,13 +39,11 @@ void Consumer::calcBigrams(int id, moodycamel::BlockingConcurrentQueue<std::vect
     int z =665;
     printf("%d\n",z);
 
-
     int x =666;
     printf("%d\n",x);
 
-    std::string inv_key = "";
-    vector<std::string> inv_key_split(2);
 
+    /*
     cout <<"risultato locale"<<endl;
     char* stringa;
     for(auto elem : m){
@@ -59,8 +52,9 @@ void Consumer::calcBigrams(int id, moodycamel::BlockingConcurrentQueue<std::vect
         //cout <<elem.first<<" "<<elem.second<<endl;
     }
     printf("\n");
-
-    /*
+    */
+    std::string inv_key = "";
+    vector<std::string> inv_key_split(2);
     for(auto elem : m){
         inv_key = elem.first;
         int counter = elem.second;
@@ -68,12 +62,12 @@ void Consumer::calcBigrams(int id, moodycamel::BlockingConcurrentQueue<std::vect
         ssin >> inv_key_split[0];
         ssin >> inv_key_split[1];
         inv_key = inv_key_split[1]+" "+inv_key_split[0];
-        if(b.find(elem.first) != b.end()){
-            b.insertAndIncrement(elem.first, counter);
-        } else if(b.find(inv_bigram) != b.end()){
-            b.insertAndIncrement(inv_bigram, counter);
+        if (bigrams.find(elem.first) != bigrams.end()) {
+            bigrams.insertAndIncrement(elem.first, counter);
+        } else if (bigrams.find(inv_bigram) != bigrams.end()) {
+            bigrams.insertAndIncrement(inv_bigram, counter);
         } else{
-            b.insertAndSet(elem.first, 1);
+            bigrams.insertAndSet(elem.first, 1);
         }
     }
 
