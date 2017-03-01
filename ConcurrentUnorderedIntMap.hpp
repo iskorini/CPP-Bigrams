@@ -3,7 +3,8 @@
 //
 
 #include <unordered_map>
-#include <atomic>
+#include <fstream>
+#include <mutex>
 
 #ifndef CPP_BIGRAMS_CONCURRENTUNORDEREDMAP_HPP
 #define CPP_BIGRAMS_CONCURRENTUNORDEREDMAP_HPP
@@ -13,23 +14,43 @@
 template<typename type>
 class ConcurrentUnorderedIntMap {
 private:
-    std::unordered_map<type, std::atomic_int> unorderedMap;
+    std::unordered_map<type, int> unorderedMap;
     std::mutex mutex;
 public:
-    void increment(const type &key) {
-        unorderedMap.at(key)++;
+    void insertAndIncrement(const type &key, int value) {
+        std::lock_guard<std::mutex> guard{mutex};
+        unorderedMap[key] += value;
     }
 
-    atomic<int> &operator[](type &key) {
-        std::lock_guard<std::mutex> guard{mutex};
+    void insertAndSet(const type &key, int value) {
+        std::lock_guard<std::mutex> guard(mutex);
+        unorderedMap[key] = value;
+    }
+
+    typename std::unordered_map<type, int>::const_iterator find(type x) {
+        return unorderedMap.find(x);
+    };
+
+    typename std::unordered_map<type, int>::const_iterator end() {
+        return unorderedMap.end();
+    };
+
+    /*
+     * non thread safe, usare solo per get
+     */
+    int &operator[](type &key) {
+        return unorderedMap[key];
+    }
+
+    int &operator[](type *key) {
         return unorderedMap[key];
     }
 
     /*
      * debug function
-     */
-    void writeHtmlFile(string path) {
-        ofstream htmlFile;
+    */
+    void writeHtmlFile(std::string path) {
+        std::ofstream htmlFile;
         htmlFile.open(path);
         htmlFile << "<!DOCTYPE html><html><head></head>";
         htmlFile
@@ -49,4 +70,5 @@ public:
         htmlFile << "</body></html>";
         htmlFile.close();
     }
+
 };

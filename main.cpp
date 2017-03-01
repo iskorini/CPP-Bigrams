@@ -1,13 +1,12 @@
 
 #include <iostream>
-#include "ctpl.h"
 #include <boost/foreach.hpp>
 #include <boost/filesystem.hpp>
 #include "Producer.h"
 #include "Consumer.h"
 #include "boost/iostreams/device/mapped_file.hpp"
-#include <errno.h>
 #include "ConcurrentUnorderedIntMap.hpp"
+
 using namespace std;
 namespace fs =boost::filesystem;
 namespace cq = moodycamel;
@@ -16,7 +15,7 @@ int main(int argc, char **argv) {
     moodycamel::ConcurrentQueue<boost::filesystem::path> fileQueue(999);
     moodycamel::BlockingConcurrentQueue<std::vector<std::string>> q(999);
 
-    std::unordered_map <std::string, int> bigrams;
+    ConcurrentUnorderedIntMap<std::string> bigrams;
 
     fs::path targetDir("C:\\Users\\iskor\\CLionProjects\\CPP-Bigrams\\File\\esempi");
     fs::directory_iterator it(targetDir), eod;
@@ -30,7 +29,7 @@ int main(int argc, char **argv) {
 
 
     Producer producer(q, fileQueue);
-    Consumer consumer(q, fileQueue, bigrams, fileQueue.size_approx());
+    Consumer consumer(q, fileQueue, bigrams, (int) fileQueue.size_approx());
     std::thread threadProducer = producer.startProducer();
     std::thread threadConsumer = consumer.startConsumer();
     threadProducer.join();
