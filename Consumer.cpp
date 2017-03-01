@@ -50,7 +50,7 @@ void Consumer::calcBigrams(int id, moodycamel::BlockingConcurrentQueue<std::vect
 
     std::string inv_key = "";
     vector<std::string> inv_key_split(2);
-    /*
+
     cout <<"risultato locale"<<endl;
     char* stringa;
     for(auto elem : m){
@@ -59,8 +59,8 @@ void Consumer::calcBigrams(int id, moodycamel::BlockingConcurrentQueue<std::vect
         //cout <<elem.first<<" "<<elem.second<<endl;
     }
     printf("\n");
-    */
 
+    /*
     for(auto elem : m){
         inv_key = elem.first;
         int counter = elem.second;
@@ -68,7 +68,6 @@ void Consumer::calcBigrams(int id, moodycamel::BlockingConcurrentQueue<std::vect
         ssin >> inv_key_split[0];
         ssin >> inv_key_split[1];
         inv_key = inv_key_split[1]+" "+inv_key_split[0];
-
         if(b.find(elem.first) != b.end()){
             b.insertAndIncrement(elem.first, counter);
         } else if(b.find(inv_bigram) != b.end()){
@@ -87,6 +86,4 @@ void Consumer::calcBigrams(int id, moodycamel::BlockingConcurrentQueue<std::vect
     }
     printf("\n");
     */
-
-
 }

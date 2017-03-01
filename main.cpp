@@ -51,14 +51,16 @@ int main(int argc, char **argv) {
     //free(producer);
     //cout<<"culo2"<<endl;
     //delete &consumer;
-
+    /*
     for(auto elem : bigrams){
         cout <<elem.first<<" "<<elem.second<<endl;
     }
+     */
 
     std:cerr<<"Error "<<strerror(errno)<<std::endl;
     cout << fileQueue.size_approx() << endl;
     cout << q.size_approx() << endl;
+    bigrams.writeHtmlFile("C:\\Users\\iskor\\CLionProjects\\CPP-Bigrams\\File\\esempi.html");
 
     return 0;
 }

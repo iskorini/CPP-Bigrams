@@ -9,14 +9,25 @@
 #ifndef CPP_BIGRAMS_CONCURRENTUNORDEREDMAP_HPP
 #define CPP_BIGRAMS_CONCURRENTUNORDEREDMAP_HPP
 
-#endif //CPP_BIGRAMS_CONCURRENTUNORDEREDMAP_HPP
+
 
 template<typename type>
 class ConcurrentUnorderedIntMap {
 private:
     std::unordered_map<type, int> unorderedMap;
-    std::mutex mutex;
+    mutable std::mutex mutex;
 public:
+    ConcurrentUnorderedIntMap() {}
+
+    ConcurrentUnorderedIntMap(ConcurrentUnorderedIntMap &&other) {
+        std::lock_guard<std::mutex> lock(other.mutex);
+        unorderedMap = std::move(other.unorderedMap);
+    }
+
+    ConcurrentUnorderedIntMap(const ConcurrentUnorderedIntMap &other) {
+        std::lock_guard<std::mutex> lock(other.mutex);
+        unorderedMap = other.unorderedMap;
+    }
     void insertAndIncrement(const type &key, int value) {
         std::lock_guard<std::mutex> guard{mutex};
         unorderedMap[key] += value;
@@ -33,6 +44,11 @@ public:
 
     typename std::unordered_map<type, int>::const_iterator end() {
         return unorderedMap.end();
+    };
+
+    long size() {
+        std::lock_guard<std::mutex> guard(mutex);
+        return unorderedMap.size();
     };
 
     /*
@@ -72,3 +88,5 @@ public:
     }
 
 };
+
+#endif //CPP_BIGRAMS_CONCURRENTUNORDEREDMAP_HPP
