@@ -11,6 +11,7 @@ using namespace std;
 ctpl::thread_pool Consumer::thread_pool(4);
 void Consumer::consume() {
     for (int i = 0; i < expectedFiles; i++) {
+        printf("diocaro\n");
         thread_pool.push([this](int id) {
             this->calcBigrams(id);
         });
@@ -21,7 +22,6 @@ void Consumer::calcBigrams(int id) {
     std::vector<std::string> text;
     unordered_map <std::string, int> m;
     q.try_dequeue(text);
-    printf("merda\n");
     std::string bigram = "";
     std::string inv_bigram = "";
     for(int i = 0;i < text.size()-1;i++){
@@ -35,20 +35,12 @@ void Consumer::calcBigrams(int id) {
             m[bigram] = 1;
         }
     }
-
-    int z =665;
-    printf("%d\n",z);
-
-    int x =666;
-    printf("%d\n",x);
-
-
     /*
     cout <<"risultato locale"<<endl;
-    char* stringa;
+    //char* stringa;
     for(auto elem : m){
-        strcpy(stringa,elem.first.c_str());
-        printf("coppia chiave-valore: %s %d \n",stringa, elem.second);
+        //strcpy(stringa,elem.first.c_str());
+        printf("coppia chiave-valore: %s %d \n",elem.first.c_str(), elem.second);
         //cout <<elem.first<<" "<<elem.second<<endl;
     }
     printf("\n");
@@ -69,15 +61,16 @@ void Consumer::calcBigrams(int id) {
         } else{
             bigrams.insertAndSet(elem.first, 1);
         }
-    }
 
-    std::cout << "risultato attuale" << std::endl;
+    }
+    bigrams.printContent();
+    //std::cout << "risultato attuale" << std::endl;
     /*
-    for(auto elem : b){
-        strcpy(stringa,elem.first.c_str());
-        printf("coppia chiave-valore: %s %d \n",stringa, elem.second);
+    for(auto elem : bigrams){
+        printf("coppia chiave-valore: %s %d \n",elem.first.c_str(), elem.second);
         //cout <<elem.first<<" "<<elem.second<<endl;
     }
     printf("\n");
-    */
+     */
+
 }

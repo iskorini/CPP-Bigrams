@@ -65,6 +65,15 @@ public:
     /*
      * debug function
     */
+
+    void printContent(){
+        std::cout<<"HASHMAP CONCORRENTE"<<std::endl;
+        for(auto elem : unorderedMap){
+            std::cout <<"coppia chiave-valore:"<<elem.first.c_str()<<" "<<elem.second<<std::endl;
+        }
+        std::cout<<std::endl;
+    }
+
     void writeHtmlFile(std::string path) {
         std::ofstream htmlFile;
         htmlFile.open(path);

@@ -30,7 +30,6 @@ void Producer::elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesyst
     //printf("porcodio: %d\n",fileQueue->size_approx());
     boost::iostreams::mapped_file file(path);
     string readFile = file.data();
-    //printf("stringa: %s\n",readFile);
     //cout<<readFile<<endl;
     std::string word;
     // per prendere il testo solo nella lingua desiderata e levare la parte di intestazione di
