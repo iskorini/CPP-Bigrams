@@ -34,13 +34,17 @@ void Producer::elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesyst
     std::string word;
     // per prendere il testo solo nella lingua desiderata e levare la parte di intestazione di
     // file provenienti da gutenberg project si parte da 1600 e si finisce 20000 caratteri prima
-    for (int i = 0 /*1600*/; i < readFile.size() /*- 20000*/; i++) {
-        while (' ' != readFile[i]) {
+    for (int i = 1600; i < readFile.size() - 20000; i++) {
+        while (/*' ' != readFile[i] && '\n' != readFile[i] && */((readFile[i] >= 'A' && readFile[i] <= 'Z') || ((readFile[i] >= 'a' && readFile[i] <= 'z')))) {
+            if(readFile[i] >= 'A' && readFile[i] <= 'Z'){
+                readFile[i] = readFile[i]+32;
+            }
             word += readFile[i];
             i++;
         }
-        producerUnit.push_back(word);
-        //cout<<"parola estratta: "<<word<<endl;
+        if(word != ""){
+            producerUnit.push_back(word);
+        }
         word = "";
     }
 

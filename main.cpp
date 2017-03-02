@@ -15,9 +15,7 @@ int main(int argc, char **argv) {
     moodycamel::ConcurrentQueue<boost::filesystem::path> fileQueue(999);
     moodycamel::BlockingConcurrentQueue<std::vector<std::string>> q(999);
 
-    ConcurrentUnorderedIntMap<std::string> bigrams;
-
-    fs::path targetDir("C:\\Users\\Tommaso\\CLionProjects\\CPP-Bigrams\\File\\esempi");
+    fs::path targetDir("C:\\Users\\Tommaso\\CLionProjects\\CPP-Bigrams\\File\\English");
     fs::directory_iterator it(targetDir), eod;
 
     BOOST_FOREACH(fs::path const &p, std::make_pair(it, eod)) {
@@ -29,15 +27,15 @@ int main(int argc, char **argv) {
 
 
     Producer producer(q, fileQueue);
+    //printf("culo culo culo: %d\n",(int) fileQueue.size_approx());
     Consumer consumer(q, fileQueue, (int) fileQueue.size_approx());
     std::thread threadProducer = producer.startProducer();
     std::thread threadConsumer = consumer.startConsumer();
     threadProducer.join();
     threadConsumer.join();
 
-    std::vector<std::string> stringa;
-
     /*
+    std:vector<std::string> stringa;
     cout<<"dimensione q: "<<q.size_approx()<<endl;
     for(int i=0;i < 3;i++){
         q.try_dequeue(stringa);
@@ -58,12 +56,9 @@ int main(int argc, char **argv) {
         cout <<elem.first<<" "<<elem.second<<endl;
     }
      */
-
-    std:cerr<<"Error "<<strerror(errno)<<std::endl;
-    //cout << fileQueue.size_approx() << endl;
-    //cout << q.size_approx() << endl;
-    bigrams.writeHtmlFile("C:\\Users\\Tommaso\\CLionProjects\\CPP-Bigrams\\Bigrams.html");
-    bigrams.printContent();
-
+    /*
+    cout << fileQueue.size_approx() << endl;
+    cout << q.size_approx() << endl;
+    */
     return 0;
 }

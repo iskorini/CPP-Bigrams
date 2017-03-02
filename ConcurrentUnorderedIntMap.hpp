@@ -69,9 +69,18 @@ public:
     void printContent(){
         std::cout<<"HASHMAP CONCORRENTE"<<std::endl;
         for(auto elem : unorderedMap){
-            std::cout <<"coppia chiave-valore:"<<elem.first.c_str()<<" "<<elem.second<<std::endl;
+            printf("coppia chiave-valore: %s %d\n",elem.first.c_str(),elem.second);
+            //std::cout <<"coppia chiave-valore:"<<elem.first.c_str()<<" "<<elem.second<<std::endl;
         }
-        std::cout<<std::endl;
+        printf("\n");
+    }
+
+    void printValue(std::string key){
+        if(unorderedMap.find(key) != unorderedMap.end()){
+            printf("Valore: %d\n", unorderedMap[key]);
+        }else{
+            printf("Chiave non trovata\n");
+        }
     }
 
     void writeHtmlFile(std::string path) {
