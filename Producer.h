@@ -30,8 +30,6 @@ public:
     Producer(moodycamel::BlockingConcurrentQueue<std::vector<std::string>> &q,
              moodycamel::ConcurrentQueue<boost::filesystem::path> &fileQueue) : q(q), fileQueue(fileQueue) {}
     void produce();
-
-    virtual ~Producer();
     std::thread startProducer() {
         /*
         return std::thread([this] {

@@ -32,33 +32,11 @@ void Producer::elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesyst
 
     fileQueue->try_dequeue(path);
     int k = 0;
-    //printf("porcodio: %d\n",fileQueue->size_approx());
     boost::iostreams::mapped_file file(path);
     string readFile = file.data();
-    //cout<<readFile<<endl;
     std::string word;
     std::vector<std::string> producerUnit;
     producerUnit.reserve(readFile.size());
-    // per prendere il testo solo nella lingua desiderata e levare la parte di intestazione di
-    // file provenienti da gutenberg project si parte da 1600 e si finisce 20000 caratteri prima
-    /*
-    for (int i = 1600; i < readFile.size() - 20000; i++) {
-        while ((readFile[i] >= 'A' && readFile[i] <= 'Z') || ((readFile[i] >= 'a' && readFile[i] <= 'z')))) {
-            if(readFile[i] >= 'A' && readFile[i] <= 'Z'){
-                readFile[i] = readFile[i]+32;
-            }
-            word += readFile[i];
-            i++;
-        }
-        if(word != ""){
-            producerUnit.push_back(word);
-            k++;
-        }
-        word = "";
-    }
-    producerUnit.resize(k);
-
-*/
     typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
     boost::char_separator<char> sep{" ,.;-<>_()[]{}"};
     tokenizer tok{readFile, sep};
@@ -69,11 +47,6 @@ void Producer::elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesyst
     q->enqueue(producerUnit);
     cout << "numero di parole: " << k << endl;
 }
-
-Producer::~Producer() {
-    thread_pool.~thread_pool();
-}
-
 
 
 
