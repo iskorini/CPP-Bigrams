@@ -33,9 +33,13 @@ public:
 
     virtual ~Producer();
     std::thread startProducer() {
+        /*
         return std::thread([this] {
             this->produce();
-        });
+        }
+         */
+        std::thread thread1(produce, this);
+        return thread1;
     }
 };
 

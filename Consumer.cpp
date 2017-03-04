@@ -17,11 +17,11 @@ void Consumer::consume() {
             this->calcBigrams(id);
         });
     }
-    thread_pool.~thread_pool();
+    thread_pool.stop(true);
     //printf("\n");
     //bigrams.printContent();
     //bigrams.printValue("such as");
-    bigrams.writeHtmlFile("C:\\Users\\Tommaso\\CLionProjects\\CPP-Bigrams\\Bigrams.html");
+    bigrams.writeHtmlFile("C:\\Users\\iskor\\CLionProjects\\CPP-Bigrams\\Bigrams.html");
 }
 
 void Consumer::calcBigrams(int id) {
