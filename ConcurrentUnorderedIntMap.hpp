@@ -10,11 +10,10 @@
 #define CPP_BIGRAMS_CONCURRENTUNORDEREDMAP_HPP
 
 
-
-template<typename type>
+template<typename type, typename type2>
 class ConcurrentUnorderedIntMap {
 private:
-    std::unordered_map<type, int> unorderedMap;
+    std::unordered_map<type, int, type2> unorderedMap;
     mutable std::mutex mutex;
 public:
     ConcurrentUnorderedIntMap() {}
@@ -69,7 +68,8 @@ public:
     void printContent(){
         std::cout<<"HASHMAP CONCORRENTE"<<std::endl;
         for(auto elem : unorderedMap){
-            printf("coppia chiave-valore: %s %d\n",elem.first.c_str(),elem.second);
+            printf("coppia chiave-valore: %s %s %d\n", elem.first.getFirst().c_str(), elem.first.getSecond().c_str(),
+                   elem.second);
             //std::cout <<"coppia chiave-valore:"<<elem.first.c_str()<<" "<<elem.second<<std::endl;
         }
         printf("\n");
@@ -96,16 +96,18 @@ public:
         for (auto it = unorderedMap.begin(); it != unorderedMap.end(); ++it) {
             if (it->second >= minBigrams) {
                 htmlFile << "<li class=\"list-group-item justify-content-between\"> <span style=\"min-width:5%\">"
-                         << it->first << "</span>";
+                         << it->first.getFirst() << " " << it->first.getSecond() << "</span>";
                 htmlFile << "<HR style=\"height:10px; margin-left:30px; width:" << it->second
                          << "0px; max-width:80%\" COLOR=\"#03c1e3\" ALIGN=\"LEFT\">";
                 htmlFile << "<span class=\"badge badge-default badge-pill\">" << it->second << "</span>" << "</li>\n";
             }
         }
+
         htmlFile << "</ul>";
         htmlFile << "</body></html>";
         htmlFile.close();
     }
+
 
 };
 

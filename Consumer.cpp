@@ -6,7 +6,9 @@
 #include <sstream>
 #include "Consumer.h"
 
+
 using namespace std;
+
 
 ctpl::thread_pool Consumer::thread_pool(4);
 void Consumer::consume() {
@@ -21,23 +23,25 @@ void Consumer::consume() {
     //printf("\n");
     //bigrams.printContent();
     //bigrams.printValue("such as");
-    bigrams.writeHtmlFile("C:\\Users\\iskor\\CLionProjects\\CPP-Bigrams\\Bigrams.html", 100);
+    bigrams.writeHtmlFile("C:\\Users\\iskor\\CLionProjects\\CPP-Bigrams\\Bigrams.html", 3000);
 }
 
 void Consumer::calcBigrams(int id) {
     std::vector<std::string> text;
-    unordered_map <std::string, int> m;
+    unordered_map<Key, int, KeyHasher> m;
     q.wait_dequeue(text);
-    std::string bigram;
-    std::stringstream bigramStream;
+    //std::string bigram;
 
+    //std::stringstream bigramStream;
     //printf("dimensione del testo %d\n",text.size());
     for(int i = 0;i < text.size()-1;i++){
         //bigram = text[i]+" "+text[i+1];
-        bigramStream << text[i] << " " << text[i + 1];
-        bigram = bigramStream.str();
-        bigramStream.str("");
-        bigramStream.clear();
+        //bigramStream << text[i] << " " << text[i + 1];
+        //bigram = bigramStream.str();
+        Key bigram(text[i], text[i + 1]);
+        //bigram.setValue(text[i], text[i+1]);
+        // bigramStream.str("");
+        //bigramStream.clear();
         if(m.find(bigram) != m.end()){
             m[bigram]++;
         }/* else if(m.find(inv_bigram) != m.end()){
