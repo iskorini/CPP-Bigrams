@@ -21,20 +21,23 @@ void Consumer::consume() {
     //printf("\n");
     //bigrams.printContent();
     //bigrams.printValue("such as");
-    bigrams.writeHtmlFile("C:\\Users\\iskor\\CLionProjects\\CPP-Bigrams\\Bigrams.html");
+    bigrams.writeHtmlFile("C:\\Users\\iskor\\CLionProjects\\CPP-Bigrams\\Bigrams.html", 100);
 }
 
 void Consumer::calcBigrams(int id) {
     std::vector<std::string> text;
     unordered_map <std::string, int> m;
     q.wait_dequeue(text);
-    std::string bigram = "";
-    //std::string inv_bigram = "";
+    std::string bigram;
+    std::stringstream bigramStream;
+
     //printf("dimensione del testo %d\n",text.size());
     for(int i = 0;i < text.size()-1;i++){
-        bigram = text[i]+" "+text[i+1];
-        //inv_bigram = text[i+1]+" "+text[i];
-        //printf("abete\n");
+        //bigram = text[i]+" "+text[i+1];
+        bigramStream << text[i] << " " << text[i + 1];
+        bigram = bigramStream.str();
+        bigramStream.str("");
+        bigramStream.clear();
         if(m.find(bigram) != m.end()){
             m[bigram]++;
         }/* else if(m.find(inv_bigram) != m.end()){

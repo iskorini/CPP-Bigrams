@@ -83,7 +83,7 @@ public:
         }
     }
 
-    void writeHtmlFile(std::string path) {
+    void writeHtmlFile(std::string path, int minBigrams) {
         std::ofstream htmlFile;
         htmlFile.open(path);
         htmlFile << "<!DOCTYPE html><html><head></head>";
@@ -94,11 +94,13 @@ public:
         htmlFile << "<ul class=\"col-sm-12 list-group\">\n";
 
         for (auto it = unorderedMap.begin(); it != unorderedMap.end(); ++it) {
-            htmlFile << "<li class=\"list-group-item justify-content-between\"> <span style=\"min-width:5%\">"
-                     << it->first << "</span>";
-            htmlFile << "<HR style=\"height:10px; margin-left:30px; width:" << it->second
-                     << "0px; max-width:80%\" COLOR=\"#03c1e3\" ALIGN=\"LEFT\">";
-            htmlFile << "<span class=\"badge badge-default badge-pill\">" << it->second << "</span>" << "</li>\n";
+            if (it->second >= minBigrams) {
+                htmlFile << "<li class=\"list-group-item justify-content-between\"> <span style=\"min-width:5%\">"
+                         << it->first << "</span>";
+                htmlFile << "<HR style=\"height:10px; margin-left:30px; width:" << it->second
+                         << "0px; max-width:80%\" COLOR=\"#03c1e3\" ALIGN=\"LEFT\">";
+                htmlFile << "<span class=\"badge badge-default badge-pill\">" << it->second << "</span>" << "</li>\n";
+            }
         }
         htmlFile << "</ul>";
         htmlFile << "</body></html>";

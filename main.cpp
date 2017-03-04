@@ -9,6 +9,7 @@
 #include "ConcurrentUnorderedIntMap.hpp"
 #include <boost/tokenizer.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/timer/timer.hpp>
 using namespace std;
 namespace fs =boost::filesystem;
 namespace cq = moodycamel;
@@ -26,6 +27,7 @@ int main(int argc, char **argv) {
                         fileQueue.enqueue(p);
                     }
                 }
+    boost::timer::auto_cpu_timer t;
 
     Producer producer(q, fileQueue);
     Consumer consumer(q, fileQueue, (int) fileQueue.size_approx());
@@ -33,32 +35,5 @@ int main(int argc, char **argv) {
     std::thread threadConsumer = consumer.startConsumer();
     threadProducer.join();
     threadConsumer.join();
-
-    /*
-    std:vector<std::string> stringa;
-    cout<<"dimensione q: "<<q.size_approx()<<endl;
-    for(int i=0;i < 3;i++){
-        q.try_dequeue(stringa);
-        cout<<"stampo stringa "<<i<<endl;
-        for(int j=0;j < stringa.size();j++){
-            cout<<stringa[j].c_str()<<endl;
-        }
-        cout<<endl;
-    }
-    */
-
-    //cout<<"culo1"<<endl;
-    //free(producer);
-    //cout<<"culo2"<<endl;
-    //delete &consumer;
-    /*
-    for(auto elem : bigrams){
-        cout <<elem.first<<" "<<elem.second<<endl;
-    }
-     */
-    /*
-    cout << fileQueue.size_approx() << endl;
-    cout << q.size_approx() << endl;
-    */
     return 0;
 }

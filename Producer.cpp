@@ -11,7 +11,7 @@
 
 using namespace std;
 
-ctpl::thread_pool Producer::thread_pool(2);
+ctpl::thread_pool Producer::thread_pool(4);
 
 void Producer::produce() {
 
@@ -42,8 +42,10 @@ void Producer::elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesyst
     tokenizer tok{readFile, sep};
     for (const auto &t : tok) {
         producerUnit.push_back(t);
+        //producerUnit[k] = t;
         k++;
     }
+    //readFile.resize(k);
     q->enqueue(producerUnit);
     cout << "numero di parole: " << k << endl;
 }
