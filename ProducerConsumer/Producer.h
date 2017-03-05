@@ -9,9 +9,9 @@
 #include <string>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
-#include "ctpl.h"
-#include "concurrentqueue.h"
-#include "blockingconcurrentqueue.h"
+#include "../ThreadPool/ctpl.h"
+#include "../DataStructure/concurrentqueue.h"
+#include "../DataStructure/blockingconcurrentqueue.h"
 #include "boost/filesystem.hpp"
 
 using namespace std;
@@ -29,14 +29,11 @@ private:
 public:
     Producer(moodycamel::BlockingConcurrentQueue<std::vector<std::string>> &q,
              moodycamel::ConcurrentQueue<boost::filesystem::path> &fileQueue) : q(q), fileQueue(fileQueue) {}
-    void produce();
-    std::thread startProducer() {
-        /*
-        return std::thread([this] {
-            this->produce();
-        }
-         */
-        std::thread thread1(produce, this);
+
+    void produce(int threadNumber);
+
+    std::thread startProducer(int threadNumber) {
+        std::thread thread1(produce, this, threadNumber);
         return thread1;
     }
 };

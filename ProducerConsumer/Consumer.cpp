@@ -10,8 +10,8 @@
 using namespace std;
 
 
-ctpl::thread_pool Consumer::thread_pool(4);
-void Consumer::consume() {
+void Consumer::consume(int threadNumber) {
+    ctpl::thread_pool thread_pool(threadNumber);
     //printf("diocaro\n");
     for (int i = 0; i < expectedFiles; i++) {
         //printf("%d\n",expectedFiles);

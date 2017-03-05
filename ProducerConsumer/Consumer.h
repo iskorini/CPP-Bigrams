@@ -9,9 +9,9 @@
 #include <string>
 #include <unordered_map>
 #include <boost/filesystem/path.hpp>
-#include "ctpl.h"
-#include "blockingconcurrentqueue.h"
-#include "ConcurrentUnorderedIntMap.hpp"
+#include "../ThreadPool/ctpl.h"
+#include "../DataStructure/blockingconcurrentqueue.h"
+#include "../DataStructure/ConcurrentUnorderedIntMap.hpp"
 #include <boost/functional/hash.hpp>
 
 
@@ -81,8 +81,6 @@ private:
     moodycamel::ConcurrentQueue<boost::filesystem::path> &fileQueue;
     ConcurrentUnorderedIntMap<Key, KeyHasher> bigrams;
     int expectedFiles;
-    static ctpl::thread_pool thread_pool;
-
     void calcBigrams(int id);
 
 
@@ -93,11 +91,10 @@ public:
                                                                                                    expectedFiles(
                                                                                                            expectedFiles) {}
 
-    void consume();
-    std::thread startConsumer() {
-        return std::thread([this] {
-            this->consume();
-        });
+    void consume(int threadNumber);
+
+    std::thread startConsumer(int threadNumber) {
+        return std::thread(consume, this, threadNumber);
     }
 };
 

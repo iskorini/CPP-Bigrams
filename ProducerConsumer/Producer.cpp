@@ -11,10 +11,9 @@
 
 using namespace std;
 
-ctpl::thread_pool Producer::thread_pool(4);
 
-void Producer::produce() {
-
+void Producer::produce(int threadNumber) {
+    ctpl::thread_pool thread_pool(threadNumber);
     while (fileQueue.size_approx() > 0) {
         thread_pool.push(
                 [this](int id, moodycamel::ConcurrentQueue<boost::filesystem::path> *&fileQueue,
