@@ -19,22 +19,27 @@ namespace cq = moodycamel;
 
 class Producer {
 private:
-    cq::BlockingConcurrentQueue<std::vector<std::string>> &q;
+    cq::ConcurrentQueue<std::vector<std::string>> &q;
     cq::ConcurrentQueue<boost::filesystem::path> &fileQueue;
     static ctpl::thread_pool thread_pool;
-
+    std::mutex *m;
+    std::condition_variable *cv;
+    bool *done;
+    bool *notified;
     void elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesystem::path> *&fileQueue,
-                       moodycamel::BlockingConcurrentQueue<std::vector<std::string>> *&q);
+                       moodycamel::ConcurrentQueue<std::vector<std::string>> *&q);
 
 public:
-    Producer(moodycamel::BlockingConcurrentQueue<std::vector<std::string>> &q,
-             moodycamel::ConcurrentQueue<boost::filesystem::path> &fileQueue) : q(q), fileQueue(fileQueue) {}
+    Producer(moodycamel::ConcurrentQueue<std::vector<std::string>> &q,
+             moodycamel::ConcurrentQueue<boost::filesystem::path> &fileQueue, std::mutex *m, std::condition_variable *cv,
+             bool *done, bool *notified) : q(q), fileQueue(fileQueue), m(m), cv(cv), done(done), notified(notified) {}
 
     void produce(int threadNumber);
 
     std::thread startProducer(int threadNumber) {
-        std::thread thread1(produce, this, threadNumber);
-        return thread1;
+        return std::thread([this, threadNumber] {
+            this->produce(threadNumber);
+        });
     }
 };
 
