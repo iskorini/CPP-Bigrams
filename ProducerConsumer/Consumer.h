@@ -81,7 +81,7 @@ private:
     moodycamel::ConcurrentQueue<boost::filesystem::path> &fileQueue;
     ConcurrentUnorderedIntMap<Key, KeyHasher> bigrams;
     int expectedFiles;
-    void calcBigrams(int id);
+    int calcBigrams(int id);
 
 
 public:

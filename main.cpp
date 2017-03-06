@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
     moodycamel::ConcurrentQueue<boost::filesystem::path> fileQueue(999);
     moodycamel::BlockingConcurrentQueue<std::vector<std::string>> q(999);
 
-    fs::path targetDir("C:\\Users\\iskor\\CLionProjects\\CPP-Bigrams\\File\\English");
+    fs::path targetDir("C:\\Users\\iskor\\CLionProjects\\CPP-Bigrams\\File\\Italiano");
     fs::directory_iterator it(targetDir), eod;
     std::vector<std::thread> threadVector;
     BOOST_FOREACH(fs::path const &p, std::make_pair(it, eod)) {
@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
     Producer producer(q, fileQueue);
     Consumer consumer(q, fileQueue, (int) fileQueue.size_approx());
     std::thread threadProducer = producer.startProducer(8);
-    std::thread threadConsumer = consumer.startConsumer(1);
+    std::thread threadConsumer = consumer.startConsumer(2);
     threadProducer.join();
     threadConsumer.join();
     return 0;

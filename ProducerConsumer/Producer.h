@@ -23,7 +23,7 @@ private:
     cq::ConcurrentQueue<boost::filesystem::path> &fileQueue;
     static ctpl::thread_pool thread_pool;
 
-    void elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesystem::path> *&fileQueue,
+    int elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesystem::path> *&fileQueue,
                        moodycamel::BlockingConcurrentQueue<std::vector<std::string>> *&q);
 
 public:

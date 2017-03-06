@@ -24,7 +24,7 @@ void Producer::produce(int threadNumber) {
     thread_pool.stop(true);
 }
 
-void Producer::elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesystem::path> *&fileQueue,
+int Producer::elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesystem::path> *&fileQueue,
                              moodycamel::BlockingConcurrentQueue<std::vector<std::string>> *&q) {
 
     boost::filesystem::path path;
@@ -41,12 +41,9 @@ void Producer::elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesyst
     tokenizer tok{readFile, sep};
     for (const auto &t : tok) {
         producerUnit.push_back(t);
-        //producerUnit[k] = t;
-        k++;
     }
-    //readFile.resize(k);
     q->enqueue(producerUnit);
-    cout << "numero di parole: " << k << endl;
+    return 0;
 }
 
 

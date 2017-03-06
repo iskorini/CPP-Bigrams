@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="CPP-Bigrams"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CPP-Bigrams">
+				<Option output="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/CPP-Bigrams.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/../include/w32api"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include/c++"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include/c++/x86_64-pc-cygwin"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include/c++/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 CPP-Bigrams"/>
+					<CompileFile command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CPP-Bigrams/fast">
+				<Option output="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/CPP-Bigrams.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/../../../../lib/../include/w32api"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include/c++"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include/c++/x86_64-pc-cygwin"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include/c++/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 CPP-Bigrams/fast"/>
+					<CompileFile command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make.exe -j8 -f &quot;/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/DataStructure/ConcurrentUnorderedIntMap.hpp">
+			<Option target="CPP-Bigrams"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/DataStructure/blockingconcurrentqueue.h">
+			<Option target="CPP-Bigrams"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/DataStructure/concurrentqueue.h">
+			<Option target="CPP-Bigrams"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/ProducerConsumer/Consumer.cpp">
+			<Option target="CPP-Bigrams"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/ProducerConsumer/Consumer.h">
+			<Option target="CPP-Bigrams"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/ProducerConsumer/Producer.cpp">
+			<Option target="CPP-Bigrams"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/ProducerConsumer/Producer.h">
+			<Option target="CPP-Bigrams"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/ThreadPool/ctpl.h">
+			<Option target="CPP-Bigrams"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/ThreadPool/ctpl_stl.h">
+			<Option target="CPP-Bigrams"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/main.cpp">
+			<Option target="CPP-Bigrams"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

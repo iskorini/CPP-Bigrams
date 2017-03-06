@@ -1,0 +1,12 @@
+C:\Users\iskor\.CLion2016.3\system\cygwin_cmake\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams
+-- Boost version: 1.60.0
+-- Found the following Boost libraries:
+--   filesystem
+--   system
+--   iostreams
+--   timer
+--   regex
+--   chrono
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug
