@@ -10,13 +10,14 @@
 using namespace std;
 
 
-void Consumer::consume(int threadNumber) {
+void Consumer::consume(int threadNumber, int maxSize) {
     ctpl::thread_pool thread_pool(threadNumber);
     //printf("diocaro\n");
+    bool resized = false;
     for (int i = 0; i < expectedFiles; i++) {
         //printf("%d\n",expectedFiles);
-        thread_pool.push([this](int id) {
-            this->calcBigrams(id);
+        thread_pool.push([this, maxSize, &thread_pool, &resized](int id) {
+            this->calcBigrams(id, maxSize, &thread_pool, &resized);
         });
     }
     thread_pool.stop(true);
@@ -26,12 +27,15 @@ void Consumer::consume(int threadNumber) {
     //bigrams.writeHtmlFile("/home/cecca/ClionProjects/CPP-Bigrams/File/bigrammi.html", 3000);
 }
 
-void Consumer::calcBigrams(int id) {
+void Consumer::calcBigrams(int id, int maxSize, ctpl::thread_pool *threadPool, bool *resized) {
     std::unique_lock<std::mutex> lock(*m);
     std::vector<std::string> text;
     unordered_map<Key, int, KeyHasher> m;
-
-
+    if (!(*resized) && *done) {
+        cout << "aumento la dimensione della threadpool" << endl;
+        threadPool->resize(maxSize);
+        *resized = 1;
+    }
     while (!(*done || *notified)) {
         cv->wait(lock);
 

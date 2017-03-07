@@ -21,9 +21,12 @@ void Producer::produce(int threadNumber) {
                     this->elaborateText(id, fileQueue, q);
                 }, &fileQueue, &q);
     }
-    *done = true;
-    *notified = true;
+
+
     thread_pool.stop(true);
+    *notified = true;
+    *done = true;
+    cout << "il produttore ha finito" << endl;
     cv->notify_all();
 }
 

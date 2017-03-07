@@ -81,7 +81,8 @@ private:
     moodycamel::ConcurrentQueue<boost::filesystem::path> &fileQueue;
     ConcurrentUnorderedIntMap<Key, KeyHasher> bigrams;
     int expectedFiles;
-    void calcBigrams(int id);
+
+    void calcBigrams(int id, int maxSize, ctpl::thread_pool *threadPool, bool *resized);
     std::mutex* m;
     std::condition_variable* cv;
     bool *done;
@@ -89,17 +90,19 @@ private:
 
 
 public:
+
+
     Consumer(moodycamel::ConcurrentQueue<std::vector<std::string>> &q,
              moodycamel::ConcurrentQueue<boost::filesystem::path> &fileQueue, int expectedFiles, std::mutex *m,std::condition_variable *cv, bool *done, bool *notified) : q(q),
                                                                                                    fileQueue(fileQueue),
                                                                                                    expectedFiles(
                                                                                                            expectedFiles), m(m), cv(cv), done(done), notified(notified) {}
 
-    void consume(int threadNumber);
+    void consume(int threadNumber, int maxSize);
 
-    std::thread startConsumer(int threadNumber) {
-        return std::thread([this, threadNumber] {
-           this->consume(threadNumber);
+    std::thread startConsumer(int threadNumber, int maxSize) {
+        return std::thread([this, threadNumber, maxSize] {
+            this->consume(threadNumber, maxSize);
         });
     }
 };
