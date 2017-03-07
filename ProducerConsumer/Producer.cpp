@@ -11,21 +11,23 @@
 
 using namespace std;
 
-
 void Producer::produce(int threadNumber) {
     ctpl::thread_pool thread_pool(threadNumber);
     while (fileQueue.size_approx() > 0) {
         thread_pool.push(
                 [this](int id, moodycamel::ConcurrentQueue<boost::filesystem::path> *&fileQueue,
-                       moodycamel::BlockingConcurrentQueue<std::vector<std::string>> *&q) {
+                       moodycamel::ConcurrentQueue<std::vector<std::string>> *&q) {
                     this->elaborateText(id, fileQueue, q);
                 }, &fileQueue, &q);
     }
+    *done = true;
+    *notified = true;
     thread_pool.stop(true);
+    cv->notify_all();
 }
 
-int Producer::elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesystem::path> *&fileQueue,
-                             moodycamel::BlockingConcurrentQueue<std::vector<std::string>> *&q) {
+void Producer::elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesystem::path> *&fileQueue,
+                             moodycamel::ConcurrentQueue<std::vector<std::string>> *&q) {
 
     boost::filesystem::path path;
 
@@ -41,9 +43,16 @@ int Producer::elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesyste
     tokenizer tok{readFile, sep};
     for (const auto &t : tok) {
         producerUnit.push_back(t);
+        //producerUnit[k] = t;
+
+        // k++;
     }
+    //readFile.resize(k);
     q->enqueue(producerUnit);
-    return 0;
+    //cout << "numero di parole: " << k << endl;
+    cv->notify_one();
+    *notified = true;
+
 }
 
 

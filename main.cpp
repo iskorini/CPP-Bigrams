@@ -17,9 +17,13 @@ namespace cq = moodycamel;
 
 int main(int argc, char **argv) {
     moodycamel::ConcurrentQueue<boost::filesystem::path> fileQueue(999);
-    moodycamel::BlockingConcurrentQueue<std::vector<std::string>> q(999);
+    moodycamel::ConcurrentQueue<std::vector<std::string>> q(999);
+    std::mutex m;
+    std::condition_variable cv;
+    bool done = false;
+    bool notified = false;
 
-    fs::path targetDir("C:\\Users\\iskor\\CLionProjects\\CPP-Bigrams\\File\\Italiano");
+    fs::path targetDir("/home/cecca/ClionProjects/CPP-Bigrams/File/Italiano");
     fs::directory_iterator it(targetDir), eod;
     std::vector<std::thread> threadVector;
     BOOST_FOREACH(fs::path const &p, std::make_pair(it, eod)) {
@@ -29,10 +33,10 @@ int main(int argc, char **argv) {
                 }
     boost::timer::auto_cpu_timer t;
 
-    Producer producer(q, fileQueue);
-    Consumer consumer(q, fileQueue, (int) fileQueue.size_approx());
-    std::thread threadProducer = producer.startProducer(8);
-    std::thread threadConsumer = consumer.startConsumer(2);
+    Producer producer(q, fileQueue, &m, &cv, &done, &notified);
+    Consumer consumer(q, fileQueue, (int) fileQueue.size_approx(), &m, &cv, &done, &notified);
+    std::thread threadProducer = producer.startProducer(30);
+    std::thread threadConsumer = consumer.startConsumer(15);
     threadProducer.join();
     threadConsumer.join();
     return 0;
