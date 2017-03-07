@@ -35,8 +35,8 @@ int main(int argc, char **argv) {
 
     Producer producer(q, fileQueue, &m, &cv, &done, &notified);
     Consumer consumer(q, fileQueue, (int) fileQueue.size_approx(), &m, &cv, &done, &notified);
-    std::thread threadProducer = producer.startProducer(30);
-    std::thread threadConsumer = consumer.startConsumer(15);
+    std::thread threadProducer = producer.startProducer(48);
+    std::thread threadConsumer = consumer.startConsumer(1,36);
     threadProducer.join();
     threadConsumer.join();
     return 0;

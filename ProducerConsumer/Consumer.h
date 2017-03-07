@@ -50,10 +50,6 @@ namespace std {
             using std::hash;
             using std::string;
 
-            // Compute individual hash values for first,
-            // second and third and combine them using XOR
-            // and bit shifting:
-
             return ((hash<string>()(k.first)
                      ^ (hash<string>()(k.second) << 1)) >> 1);
         }

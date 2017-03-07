@@ -3,8 +3,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.o"
   "CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.o"
   "CPP-Bigrams.pdb"
-  "CPP-Bigrams.exe"
-  "libCPP-Bigrams.dll.a"
+  "CPP-Bigrams"
 )
 
 # Per-language clean rules from dependency scanning.

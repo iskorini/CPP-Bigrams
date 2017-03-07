@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/ProducerConsumer/Consumer.cpp" "/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.o"
-  "/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/ProducerConsumer/Producer.cpp" "/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.o"
-  "/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/main.cpp" "/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/CMakeFiles/CPP-Bigrams.dir/main.cpp.o"
+  "/home/cecca/ClionProjects/CPP-Bigrams/ProducerConsumer/Consumer.cpp" "/home/cecca/ClionProjects/CPP-Bigrams/cmake-build-debug/CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.o"
+  "/home/cecca/ClionProjects/CPP-Bigrams/ProducerConsumer/Producer.cpp" "/home/cecca/ClionProjects/CPP-Bigrams/cmake-build-debug/CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.o"
+  "/home/cecca/ClionProjects/CPP-Bigrams/main.cpp" "/home/cecca/ClionProjects/CPP-Bigrams/cmake-build-debug/CMakeFiles/CPP-Bigrams.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

@@ -1,5 +1,5 @@
-C:\Users\iskor\.CLion2016.3\system\cygwin_cmake\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams
--- Boost version: 1.60.0
+/usr/local/clion-2016.3/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/cecca/ClionProjects/CPP-Bigrams
+-- Boost version: 1.58.0
 -- Found the following Boost libraries:
 --   filesystem
 --   system
@@ -9,4 +9,4 @@ C:\Users\iskor\.CLion2016.3\system\cygwin_cmake\bin\cmake.exe -DCMAKE_BUILD_TYPE
 --   chrono
 -- Configuring done
 -- Generating done
--- Build files have been written to: /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug
+-- Build files have been written to: /home/cecca/ClionProjects/CPP-Bigrams/cmake-build-debug

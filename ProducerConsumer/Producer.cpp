@@ -26,7 +26,6 @@ void Producer::produce(int threadNumber) {
     thread_pool.stop(true);
     *notified = true;
     *done = true;
-    cout << "il produttore ha finito" << endl;
     cv->notify_all();
 }
 
@@ -35,7 +34,6 @@ void Producer::elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesyst
     boost::filesystem::path path;
 
     fileQueue->try_dequeue(path);
-    cout << "elaboro: " << path.string() << endl;
     int k = 0;
     boost::iostreams::mapped_file file(path);
     string readFile = file.data();
@@ -47,13 +45,8 @@ void Producer::elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesyst
     tokenizer tok{readFile, sep};
     for (const auto &t : tok) {
         producerUnit.push_back(t);
-        //producerUnit[k] = t;
-
-        // k++;
     }
-    //readFile.resize(k);
     q->enqueue(producerUnit);
-    //cout << "numero di parole: " << k << endl;
     cv->notify_one();
     *notified = true;
 

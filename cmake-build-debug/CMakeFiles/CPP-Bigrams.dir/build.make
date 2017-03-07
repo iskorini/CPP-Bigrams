@@ -34,19 +34,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /cygdrive/c/Users/iskor/.CLion2016.3/system/cygwin_cmake/bin/cmake.exe
+CMAKE_COMMAND = /usr/local/clion-2016.3/bin/cmake/bin/cmake
 
 # The command to remove a file.
-RM = /cygdrive/c/Users/iskor/.CLion2016.3/system/cygwin_cmake/bin/cmake.exe -E remove -f
+RM = /usr/local/clion-2016.3/bin/cmake/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams
+CMAKE_SOURCE_DIR = /home/cecca/ClionProjects/CPP-Bigrams
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug
+CMAKE_BINARY_DIR = /home/cecca/ClionProjects/CPP-Bigrams/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/CPP-Bigrams.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/CPP-Bigrams.dir/flags.make
 
 CMakeFiles/CPP-Bigrams.dir/main.cpp.o: CMakeFiles/CPP-Bigrams.dir/flags.make
 CMakeFiles/CPP-Bigrams.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/CPP-Bigrams.dir/main.cpp.o"
-	/usr/bin/c++.exe   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/CPP-Bigrams.dir/main.cpp.o -c /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cecca/ClionProjects/CPP-Bigrams/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/CPP-Bigrams.dir/main.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/CPP-Bigrams.dir/main.cpp.o -c /home/cecca/ClionProjects/CPP-Bigrams/main.cpp
 
 CMakeFiles/CPP-Bigrams.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CPP-Bigrams.dir/main.cpp.i"
-	/usr/bin/c++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/main.cpp > CMakeFiles/CPP-Bigrams.dir/main.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cecca/ClionProjects/CPP-Bigrams/main.cpp > CMakeFiles/CPP-Bigrams.dir/main.cpp.i
 
 CMakeFiles/CPP-Bigrams.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CPP-Bigrams.dir/main.cpp.s"
-	/usr/bin/c++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/main.cpp -o CMakeFiles/CPP-Bigrams.dir/main.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cecca/ClionProjects/CPP-Bigrams/main.cpp -o CMakeFiles/CPP-Bigrams.dir/main.cpp.s
 
 CMakeFiles/CPP-Bigrams.dir/main.cpp.o.requires:
 
@@ -83,16 +83,16 @@ CMakeFiles/CPP-Bigrams.dir/main.cpp.o.provides.build: CMakeFiles/CPP-Bigrams.dir
 
 CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.o: CMakeFiles/CPP-Bigrams.dir/flags.make
 CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.o: ../ProducerConsumer/Producer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.o"
-	/usr/bin/c++.exe   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.o -c /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/ProducerConsumer/Producer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cecca/ClionProjects/CPP-Bigrams/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.o -c /home/cecca/ClionProjects/CPP-Bigrams/ProducerConsumer/Producer.cpp
 
 CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.i"
-	/usr/bin/c++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/ProducerConsumer/Producer.cpp > CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cecca/ClionProjects/CPP-Bigrams/ProducerConsumer/Producer.cpp > CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.i
 
 CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.s"
-	/usr/bin/c++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/ProducerConsumer/Producer.cpp -o CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cecca/ClionProjects/CPP-Bigrams/ProducerConsumer/Producer.cpp -o CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.s
 
 CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.o.requires:
 
@@ -107,16 +107,16 @@ CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.o.provides.build: CMake
 
 CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.o: CMakeFiles/CPP-Bigrams.dir/flags.make
 CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.o: ../ProducerConsumer/Consumer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.o"
-	/usr/bin/c++.exe   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.o -c /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/ProducerConsumer/Consumer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cecca/ClionProjects/CPP-Bigrams/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.o -c /home/cecca/ClionProjects/CPP-Bigrams/ProducerConsumer/Consumer.cpp
 
 CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.i"
-	/usr/bin/c++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/ProducerConsumer/Consumer.cpp > CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cecca/ClionProjects/CPP-Bigrams/ProducerConsumer/Consumer.cpp > CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.i
 
 CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.s"
-	/usr/bin/c++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/ProducerConsumer/Consumer.cpp -o CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cecca/ClionProjects/CPP-Bigrams/ProducerConsumer/Consumer.cpp -o CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.s
 
 CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.o.requires:
 
@@ -138,22 +138,22 @@ CPP__Bigrams_OBJECTS = \
 # External object files for target CPP-Bigrams
 CPP__Bigrams_EXTERNAL_OBJECTS =
 
-CPP-Bigrams.exe: CMakeFiles/CPP-Bigrams.dir/main.cpp.o
-CPP-Bigrams.exe: CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.o
-CPP-Bigrams.exe: CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.o
-CPP-Bigrams.exe: CMakeFiles/CPP-Bigrams.dir/build.make
-CPP-Bigrams.exe: /usr/lib/libboost_filesystem.dll.a
-CPP-Bigrams.exe: /usr/lib/libboost_system.dll.a
-CPP-Bigrams.exe: /usr/lib/libboost_iostreams.dll.a
-CPP-Bigrams.exe: /usr/lib/libboost_timer.dll.a
-CPP-Bigrams.exe: /usr/lib/libboost_regex.dll.a
-CPP-Bigrams.exe: /usr/lib/libboost_chrono.dll.a
-CPP-Bigrams.exe: CMakeFiles/CPP-Bigrams.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable CPP-Bigrams.exe"
+CPP-Bigrams: CMakeFiles/CPP-Bigrams.dir/main.cpp.o
+CPP-Bigrams: CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Producer.cpp.o
+CPP-Bigrams: CMakeFiles/CPP-Bigrams.dir/ProducerConsumer/Consumer.cpp.o
+CPP-Bigrams: CMakeFiles/CPP-Bigrams.dir/build.make
+CPP-Bigrams: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
+CPP-Bigrams: /usr/lib/x86_64-linux-gnu/libboost_system.so
+CPP-Bigrams: /usr/lib/x86_64-linux-gnu/libboost_iostreams.so
+CPP-Bigrams: /usr/lib/x86_64-linux-gnu/libboost_timer.so
+CPP-Bigrams: /usr/lib/x86_64-linux-gnu/libboost_regex.so
+CPP-Bigrams: /usr/lib/x86_64-linux-gnu/libboost_chrono.so
+CPP-Bigrams: CMakeFiles/CPP-Bigrams.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/cecca/ClionProjects/CPP-Bigrams/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable CPP-Bigrams"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/CPP-Bigrams.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-CMakeFiles/CPP-Bigrams.dir/build: CPP-Bigrams.exe
+CMakeFiles/CPP-Bigrams.dir/build: CPP-Bigrams
 
 .PHONY : CMakeFiles/CPP-Bigrams.dir/build
 
@@ -168,6 +168,6 @@ CMakeFiles/CPP-Bigrams.dir/clean:
 .PHONY : CMakeFiles/CPP-Bigrams.dir/clean
 
 CMakeFiles/CPP-Bigrams.dir/depend:
-	cd /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug /cygdrive/c/Users/iskor/CLionProjects/CPP-Bigrams/cmake-build-debug/CMakeFiles/CPP-Bigrams.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/cecca/ClionProjects/CPP-Bigrams/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/cecca/ClionProjects/CPP-Bigrams /home/cecca/ClionProjects/CPP-Bigrams /home/cecca/ClionProjects/CPP-Bigrams/cmake-build-debug /home/cecca/ClionProjects/CPP-Bigrams/cmake-build-debug /home/cecca/ClionProjects/CPP-Bigrams/cmake-build-debug/CMakeFiles/CPP-Bigrams.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/CPP-Bigrams.dir/depend
 
