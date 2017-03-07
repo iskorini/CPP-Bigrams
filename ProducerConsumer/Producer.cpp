@@ -13,7 +13,8 @@ using namespace std;
 
 void Producer::produce(int threadNumber) {
     ctpl::thread_pool thread_pool(threadNumber);
-    while (fileQueue.size_approx() > 0) {
+    unsigned long queueSize = fileQueue.size_approx();
+    for (int i = 0; i < queueSize; i++) {
         thread_pool.push(
                 [this](int id, moodycamel::ConcurrentQueue<boost::filesystem::path> *&fileQueue,
                        moodycamel::ConcurrentQueue<std::vector<std::string>> *&q) {
@@ -28,10 +29,10 @@ void Producer::produce(int threadNumber) {
 
 void Producer::elaborateText(int id, moodycamel::ConcurrentQueue<boost::filesystem::path> *&fileQueue,
                              moodycamel::ConcurrentQueue<std::vector<std::string>> *&q) {
-
     boost::filesystem::path path;
 
     fileQueue->try_dequeue(path);
+    cout << "elaboro: " << path.string() << endl;
     int k = 0;
     boost::iostreams::mapped_file file(path);
     string readFile = file.data();

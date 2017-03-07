@@ -23,7 +23,7 @@ void Consumer::consume(int threadNumber) {
     //printf("\n");
     //bigrams.printContent();
     //bigrams.printValue("such as");
-    bigrams.writeHtmlFile("/home/cecca/ClionProjects/CPP-Bigrams/File/bigrammi.html", 3000);
+    //bigrams.writeHtmlFile("/home/cecca/ClionProjects/CPP-Bigrams/File/bigrammi.html", 3000);
 }
 
 void Consumer::calcBigrams(int id) {
@@ -34,9 +34,7 @@ void Consumer::calcBigrams(int id) {
 
     while (!(*done || *notified)) {
         cv->wait(lock);
-        //auto now = std::chrono::system_clock::now();
-        //cv->wait_until(lock, now +std::chrono::microseconds(1000));
-        //cout << "SONO BLOCCATO CON " <<*done <<*notified <<endl;
+
     }
     //cout << "blodo" << endl;
     q.try_dequeue(text);
