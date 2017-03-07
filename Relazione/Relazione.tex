@@ -1,0 +1,247 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{url}
+\usepackage{algorithm}% http://ctan.org/pkg/algorithms
+\usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage[italian]{babel}
+\usepackage{caption}
+\usepackage{lstcustom}
+\usepackage[scaled=0.8]{beramono}
+\usepackage[utf8x]{inputenc}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{slashbox}
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,bookmarks=false]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+
+
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+\ifcvprfinal\pagestyle{empty}\fi
+
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\columnwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont={white, bf},textfont=white}
+
+\newcommand\myworries[1]{\textbf{\textcolor{red}{#1}}}
+\makeatletter
+\newcommand{\newalgname}[1]{%
+  \renewcommand{\ALG@name}{#1}%
+}
+\newalgname{Algoritmo}
+\renewcommand{\listalgorithmname}{Lista di \ALG@name s}
+\renewcommand{\lstlistingname}{Codice}
+\renewcommand{\lstlistlistingname}{Lista di codici}
+\makeatother
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\begin{document}
+\lstdefinestyle{customA}{         
+	basicstyle=\footnotesize\lstfontfamily,
+	emphstyle=\bfseries,
+	language=C++,
+	numberstyle=\tiny,          
+	numbersep=5pt,              
+	tabsize=2,                  
+	extendedchars=true,         
+	breaklines=true,            
+	keywordstyle=\bfseries\color{green!50!black},
+	commentstyle=\itshape\color{purple!40!black},
+	frame=b,         
+	stringstyle=\color{orange}\ttfamily, 
+	showspaces=false,           
+	showtabs=false,             
+	xleftmargin=1pt, %prima era 17
+	framexleftmargin=17pt,
+	framexrightmargin=5pt,
+	framexbottommargin=4pt,
+	showstringspaces=false,     
+}
+%%%%%%%%% TITLE
+\title{PC-2016/17 Progetto finale \\
+Implementazione concorrente di un algoritmo per il calcolo dei bigrammi}
+
+\author{Tommaso Ceccarini \\
+6242250\\
+{\tt\small tommaso.ceccarini1@stud.unifi.it}
+% For a paper whose authors are all at the same institution,
+% omit the following lines up until the closing ``}''.
+% Additional authors and addresses can be added with ``\and'',
+% just like the second author.
+% To save space, use either the email address or home page, not both
+\and
+Federico Schipani\\
+6185896\\
+{\tt\small federico.schipani@stud.unifi.it}
+}
+
+\maketitle
+\thispagestyle{empty}
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+I bigrammi sono una coppia di parole o lettere adiacenti all'interno di un testo. Questa relazione descrive l'algoritmo e le relative scelte implementative di un programma
+scritto in C++ che calcola la frequenza dei bigrammi di parole che occorrono all'interno di un insieme di file di testo utilizzando un approccio multithreading. 
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+\section{Introduzione}
+\label{sec:introduzione}
+I bigrammi sono una coppia di parole o lettere adiacenti all'interno di un testo. Questa relazione descrive l'algoritmo e le relative scelte implementative di un programma
+scritto in C++ che calcola la frequenza dei bigrammi di parole che occorrono all'interno di un insieme di file di testo utilizzando un approccio multithreading. 
+L'algoritmo segue uno schema di tipo produttore consumatore in cui:
+\begin{enumerate}
+\item I produttori si occupano di leggere i file di testo da una cartella
+\item I consumatori hanno il compito di calcolare i bigrammi dei file di testo processati dai produttori
+\end{enumerate}
+
+Nello specifico, ciascun produttore, dato il percorso del file da elaborare, legge il contenuto del file e produce un token per ogni parola nel testo. 
+I bigrammi saranno dati 
+dalle coppie di token che vengono determinati in questa fase. Il dato prodotto quindi
+consiste in un insieme di token che viene posto in una coda. I consumatori, 
+d'altra parte, restano in attesa che ci siano dati da consumare e quando ciò accade, ciascuno di essi è incaricato di contare il numero di occorrenze di ogni bigramma presente nel testo che ha acquisito. Dopo questa fase, ogni consumatore
+aggiorna il contenuto della tabella che memorizza il numero di occorrenze globali dei bigrammi.
+
+
+
+
+
+
+\section{Implementazione}
+\label{sec:implementazione}
+In questa sezione vengono spiegate le scelte che hanno portato all'implementazione del programma sviluppato in C++ per calcolare il numero di occorrenze dei bigrammi in più file di testo. Nel corso delle diverse sottosezioni vengono anche descritte le diverse strutture dati che sono state utilizzate.
+\subsection{Scegliere i file da leggere}
+\label{sub:sceltafiledaleggere}
+Questa operazione è stata implementata utilizzando una coda concorrente i cui elementi sono i percorsi dei file da elaborare.
+A questo scopo è stata utilizzata la libreria \texttt{boost::filesystem::path} per rappresentare i percorsi dei file e la classe \texttt{ConcurrentQueue}, reperibile dalla repository GitHub \href{https://github.com/cameron314/concurrentqueue}{concurrentqueue},\ per implementare la coda concorrente \texttt{fileQueue} in cui i percorsi sono memorizzati. I path sono inseriti nella coda iterando sull'oggetto \texttt{targetDir}, di tipo \texttt{boost::filesystem::path},
+che rappresenta il percorso della cartella da cui i file vengono prelevati, quest'ultimi sono inseriti all'interno di \texttt{fileQueue} tramite il metodo \texttt{enqueue}.
+
+\lstinputlisting[firstline = 26, lastline = 33, caption = Lettura della cartella e selezione dei file di testo, style = customA, label = {code:letturafile}]{../main.cpp}
+\subsection{Schedulare i task: Utilizzo di due threadpool}
+\label{sub:schedularetask}
+Come è stato accennato nell'introduzione, il programma sviluppato realizza uno schema produttore consumatore per contare le occorrenze dei bigrammi. I thread che
+rappresentano i produttori e i consumatori vengono gestiti mediante due distinte thread pool realizzate mediante la libreria CTPL, reperibile sulla repository \href{https://github.com/vit-vit/CTPL}{CTPL}. Una delle threadpool si occupa di schedulare i task
+da assegnare ai produttori mentre l'altra fa altrettanto con i consumatori. Le due thread pool sono oggetti contenuti nei metodo che avviano rispettivamente la produzione e la consumazione. Inoltre, ai metodo \texttt{startProducer()} e al metodo \texttt{startConsumer()} viene passato il numero di thread con cui inizializzare le due piscine.
+\lstinputlisting[firstline = 13, lastline = 24, caption = Operazione di avvio della consumazione, style = customA, label = {code:consumazione}]{../ProducerConsumer/Consumer.cpp}
+\lstinputlisting[firstline = 14, lastline = 30, caption = Operazione di avvio della produzione, style = customA, label = {code:produzione}]{../ProducerConsumer/Producer.cpp}
+
+\subsection{Lettura dei file}
+\label{sub:letturafile}
+Come si può notare dal Codice~\ref{code:creaprodcons} per realizzare questa fase viene istanziato un oggetto \texttt{producer} di tipo \texttt{Producer} a cui vengono passate la coda concorrente \texttt{fileQueue} e una coda concorrente \texttt{q}
+sempre realizzata mediante la libreria moodycamel utilizzando la classe \href{https://github.com/cameron314/concurrentqueue/blob/master/concurrentqueue.h}{concurrentqueue} i cui elementi sono vettori di stringhe. Successivamente viene chiamata la 
+funzione membro 
+\texttt{producer.startProducer()}
+ a cui viene passato come parametro il numero di thread di tipo produttore. 
+ Questa funzione di occupa innanzitutto di inizializzare la threadpool dei produttori utilizzando il parametro passato in input per poi effettuare tante chiamate alla funzione membro 
+ \texttt{thread\_pool.push()}
+  quanti
+sono i file da elaborare. Tale funzione membro riceve in input:
+\begin{enumerate}
+\item Una lambda expression che a sua volta riceve un parametro numerico e le due code concorrenti \texttt{fileQueue} e \texttt{q} e si occupa di richiamare il metodo \texttt{elaborateText()}
+  che si occupa di fare la lettura vera e propria del file
+\item La coda \texttt{fileQueue} da cui vengono estratti i percorsi
+\item La coda \texttt{q} in cui sono prodotti i token
+\end{enumerate}
+
+Come appena accennato, la funzione membro \texttt{elaborateText()} si occupa di realizzare la lettura vera e propria di un file: viene estratto il percorso del file dalla coda
+\texttt{fileQueue} e utilizzando un oggetto di tipo \texttt{mapped\_file} della libreria \texttt{boost::iostreams} ne viene rappresentato il contenuto. i token sono realizzati definendo il tipo \texttt{tokenizer}
+i cui elementi sono dei caratteri separatori. I caratteri separatori sono rappresentati mediante l'oggetto \texttt{sep} della classe \texttt{boost::char\_separator<char>} mentre \texttt{tokenizer} è 
+definito a partire dalla classe \texttt{boost::tokenizer<boost::char\_separator<char>>}. I token veri e proprio sono realizzati istanziando l'oggetto \texttt{tok} di tipo \texttt{tokenizer} con i 
+parametri \texttt{{readFile, sep}}, in cui \texttt{readFile} è una stringa che contiene il testo del file che è stato letto. Per realizzare quindi il dato \texttt{producerUnit} che consiste in un 
+vettore di stringhe, è sufficiente iterare su \texttt{tok} per memorizzare le \texttt{string} che rappresentano i token. Infine, il dato prodotto \texttt{producerUnit} viene posto nella coda \texttt{q}. In Codice~\ref{code:elaboratetext} è riportata l'implementazione del metodo \texttt{elaborateText()}.
+\lstinputlisting[firstline = 36, lastline = 42, caption = creazione oggetti producer  e consumer, style = customA, label = {code:creaprodcons}]{../main.cpp}
+\lstinputlisting[firstline = 32, lastline = 53, caption = Elaborazione del testo della produzione, style = customA, label = {code:elaboratetext}]{../ProducerConsumer/Producer.cpp}
+\subsection{Calcolo dei bigrammi}
+\label{sub:calcbigrams}
+Per realizzare questo compito viene istanziato un oggetto di tipo \texttt{Consumer} che riceve \texttt{q}, \texttt{fileQueue} e il numero di file su cui calcolare i bigrammi. La gestione dei thread 
+e dei task da eseguire è analoga all'operazione di lettura dei file. Con la differenza che, in questo caso, i thread sono dei consumatori e il task da compiere è 
+rappresentato dal metodo \texttt{calcBigrams()}. In questo caso, quindi, l'operazione di \texttt{consume()} consiste in un ciclo \texttt{for} che esegue tante iterazioni quanti sono i file nella cartella
+sorgente in cui viene richiamata la funzione membro \texttt{thread\_pool.push()} che riceve una lambda expression che si occupa di chiamare la funzione membro \texttt{calcBigrams()}
+la quale rappresenta il task da eseguire. Come prima operazione, \texttt{calcBigrams()} definisce una \texttt{unordered\_map m} che ha come parametri la struct \texttt{Key}, il tipo primitivo \texttt{int}
+e un \texttt{KeyHasher}. Key viene definita all'interno di Consumer.h e serve a rappresentare i bigrammi all'interno dell'\texttt{unoderded\_map} mentre \texttt{KeyHasher} rappresenta la funzione
+hash che viene applicata su \texttt{Key}. Dopo questa fase, il consumatore resta in attesa che ci siano dati da consumare e quando questa condizione si verifica, il dato prelevato
+\texttt{text}, che consiste in un vettore di stringhe, viene scandito per istanziare l'oggetto \texttt{bigram} di tipo \texttt{Key} con le due stringhe \texttt{text[i]} e \texttt{text[i+1]}.
+Successivamente viene controllato se il bigramma appena creato è già presente in \texttt{m} e, in tal caso, il valore che rappresenta il numero
+di occorrenze di tale bigramma nel file che viene letto viene incrementato, altrimenti, inizializzato a 1. Dopo che \texttt{text} è stato elaborato, \texttt{m} conterrà le occorrenze dei 
+bigrammi del file che è stato preso in considerazione. A questo punto è necessario aggiornare il conteggio globale delle occorrenze per i bigrammi nella hashmap concorrente.
+A tale fine è stata definita la libreria\texttt{ ConcurrentUnorderedIntMap.hpp} che, utilizzando un \texttt{mutex}, garantisce l'accesso in mutua esclusione al valore intero su cui effettuare
+l'incremento. In particolare, viene definito un lock sull'oggetto \texttt{mutex} prima di effettuare le operazioni di incremento e inizializzazione. Questa modalità di accesso è 
+definita nelle funzioni membro \texttt{insertAndIncrement()} e \texttt{insertAndSet()}. Quindi \texttt{calcBigrams()} aggiorna la hashmap globale iterando su \texttt{m}, ossia, per ogni bigramma considerato viene 
+controllato se è già presente nell'hashmap globale e, in tal caso, viene incrementato il valore della relativa occorrenza tramite una \texttt{insertAndIncrement()}. Altrimenti, il valore
+delle occorrenze globali viene inizializzato a $1$ mediante una \texttt{insertAndSet()}. Nel Codice~\ref{code:calcbigrams} è riportata l'implementazione del metodo \texttt{calcBigrams()}.
+\lstinputlisting[firstline = 25, lastline = 59, caption = Calcolo dei bigrammi, style = customA, label = {code:calcbigrams}]{../ProducerConsumer/Consumer.cpp}
+\section{Analisi delle performance}
+Per effettuare l'analisi delle performance sono stati usati dei file prelevati da \url{http://www.gutenberg.org/}. Tutti i test sono stati effettuati sulla macchina del MICC messa a disposizione, che ha due processori Intel Xeon E5-2620 V3. I risultati delle varie esecuzioni sono riportati in Tabella \ref{table:testzero}, \ref{table:testone} e \ref{table:testtwo}. In Tabella \ref{table:testzero} e in Tabella \ref{table:testone} sono stati presi in considerazione diversi casi ottenuti dalla combinazione del numero di thread consumatore e thread produttore, nel caso in cui essi valgono 1, 12, 24, 36 e 48. Nelle righe sono riportati i valori crescenti del numero di thread consumatore, nelle colonne invece sono riportati il numero dei thread produttore. Nelle celle sono riportati i tempi di esecuzione riscontrati nei casi che sono stati presi in considerazione. Questi risultati sono ottenuti facendo una media di 10 esecuzioni effettuate per quei particolari valori. 
+Nella Tabella \ref{table:testzero} sono riportati i tempi dell'esecuzione con 78 file, mentre nella Tabella \ref{table:testtwo} sono stati presi in considerazione 234 file. 
+\begin{table}[H]
+\centering
+\caption{Test con 78 elementi}
+\label{table:testzero}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\backslashbox{\#C}{\#P} & 1      & 12    & 24    & 36    & 48    \\ \hline
+1                                          & 16,6 s & 17,4s & 17,4s & 17,1s & 16,9s \\ \hline
+12                                         & 17,8s  & 19,1s & 18,5s & 18,9s & 18,5s \\ \hline
+24                                         & 17,6s  & 19,7s & 19,9s & 20,2s & 19,6s \\ \hline
+36                                         & 18,7s  & 20,3s & 20,5s & 20,4s & 19,7s \\ \hline
+48                                         & 19,7s  & 21,3s & 21,4s & 20,1s & 20,9s \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[H]
+\centering
+\caption{Test con 234 elementi}
+\label{table:testone}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\backslashbox{\#C}{\#P} & 1     & 12    & 24    & 36    & 48    \\ \hline
+1                                          & 45,1s & 48,8s & 51,1s & 50,0s & 51,1s \\ \hline
+12                                         & 47,4s & 51,8s & 51,4s & 53,1s & 55,5s \\ \hline
+24                                         & 50,2s & 54,7s & 55,9s & 55,6s & 55,4s \\ \hline
+36                                         & 52,7s & 55,7s & 56,0s & 56,0s & 56,9s \\ \hline
+48                                         & 54,7s & 54,9s & 58,5s & 55,5s & 56,7s \\ \hline
+\end{tabular}
+\end{table}
+
+
+Nel corso dei test effettuati è stato riscontrato che il processo di produzione veniva compiuto più velocemente rispetto al processo di consumazione. A questo scopo è stata implementata la possibilità di specificare due parametri diversi per il consumatore: uno che determina il numero iniziale di thread consumatore, l'altro che specifica il numero massimo di thread che viene raggiunto quando il processo di produzione è giunto al termine. In Tabella \ref{table:testtwo} sono riportati i casi in cui il numero di produttori sia 36 o 48 e i consumatori partono da 1 e arrivano ad un numero massimo di 12, 24, 36 o 48, mentre il numero di file è sempre 234. Come si può notare confrontando la Tabella \ref{table:testtwo} con la Tabella \ref{table:testone} la possibilità di aumentare il numero di thread che effettuano il processo di consumazione migliora i tempi di esecuzione. 
+
+
+\begin{table}[H]
+\centering
+\caption{Test con 234 elementi, consumatori variabili}
+\label{table:testtwo}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\backslashbox{\#C}{Max \#P} & 12    & 24    & 36    & 48    \\ \hline
+48                                         & 50,8s & 49,9s & 49,6s & 50,4s \\ \hline
+36                                         & 49,8s & 50,5s & 50,1s & 49,7s \\ \hline
+\end{tabular}
+\end{table}
+
+\end{document}
